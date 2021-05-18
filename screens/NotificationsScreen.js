@@ -55,14 +55,14 @@ const showNotificationShedule = (title, message, index, date, id, chanel) => {
            id: id,
            channelId: chanel,
            title: title,
-           message: message,
-           vibrate: true,
-           vibration: 300,
-           soundName: "default",
-           date: date,
-           allowWhileIdle: true,
-           repeatType: "time",
-        repeatTime: 4 * 60 * 60 * 1000
+          message: message,
+          vibrate: true,
+          vibration: 300,
+          soundName: "default",
+          date: date,
+          allowWhileIdle: true,
+          repeatType: "time",
+          repeatTime: 4 * 60 * 60 * 1000
         }
     )
 }
@@ -89,7 +89,7 @@ const showNotification = (title, message, index) => {
       soundName: "default",
     })
 }
-
+const [notificationsDate, setNotificationsDate] = useState([])
     const { colors } = useTheme();
     const screenWidth = Dimensions.get('screen').width;
     const screenHeight = Dimensions.get('screen').height;
@@ -100,6 +100,7 @@ const showNotification = (title, message, index) => {
 const [date, setDate] = useState([])
     const toggleNotification = async(index) => {
         setActive(data => !data)
+       
         if(listData[index].active){
            
 
@@ -126,19 +127,48 @@ const [date, setDate] = useState([])
             showNotificationShedule("Оповещение установлено", listData[index].title, index, date, listData[index].key, chanel)*/
        
           //console.warn(utc2 - utc1);
-    
+      
+
+      
     
           let date = new Date(Date.now() + 4 * 60 * 60 * 1000) 
           let chanel = "com.aquascope" + listData[index].key
           showNotificationShedule("Оповещение", listData[index].title, index, date, listData[index].key, chanel)
-        }
+       }
+     
+     
+    
+
+
+     
            
         let data = listData
         data[index].active = !data[index].active
         setListData(data)
-        try {
+         try {
         await AsyncStorage.setItem('notifications', JSON.stringify([...data]))
          } catch (e) { console.log(e) }
+
+
+if(listData[index].active){
+          let notif = notificationsDate
+         let d = new Date(Date.now())
+         notif[index] = {
+            year: d.getFullYear(),
+           month: d.getMonth(),
+           day: d.getDate(),
+           hour: d.getHours(),
+           min: d.getMinutes(),
+           sec: d.getSeconds()
+         }
+
+         try {
+        await AsyncStorage.setItem('notificationsDate', JSON.stringify([...notif]))
+         } catch (e) { console.log(e) }
+
+         setNotificationsDate([...notif])
+
+}
     }
 
 
@@ -172,20 +202,53 @@ const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   };
 
   const [isLoading, setLoading] = useState(false)
-
+ 
   React.useEffect( () => {
     setTimeout(async() => {
       try {
-     
         setDate([...JSON.parse(await AsyncStorage.getItem('dateClock'))])
       
     } catch (e) {
       console.log(e)
      
          setDate([0, 0, 0])
-     
-  
     }
+
+      try {
+        setNotificationsDate([...JSON.parse(await AsyncStorage.getItem('notificationsDate'))])
+      
+    } catch (e) {
+      console.log(e)
+     
+         setNotificationsDate([{
+           year: 0,
+           month: 0,
+           day: 0,
+           hour: 0,
+           min: 0,
+           sec: 0
+         },
+         {
+           year: 0,
+           month: 0,
+           day: 0,
+           hour: 0,
+           min: 0,
+           sec: 0
+         },
+         {
+           year: 0,
+           month: 0,
+           day: 0,
+           hour: 0,
+           min: 0,
+           sec: 0
+         }])
+    }
+
+
+
+
       let data = []
     try {
         data = [...JSON.parse(await AsyncStorage.getItem('notifications'))]
@@ -298,7 +361,7 @@ isVisible={isTimePickerVisible}
 {/*<Text>{data.days}:{data.hours}:{data.minutes}:{data.seconds}</Text>*/}
 {
   isLoading ?
-<ClockOfFood index={index} color={colors.text} date2={listData} date={date}/>
+<ClockOfFood index={index} color={colors.text} date2={listData} date={date} notif={notificationsDate}/>
 : null
 
 }
@@ -312,7 +375,7 @@ isVisible={isTimePickerVisible}
            </View>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     tasksWrapper: {

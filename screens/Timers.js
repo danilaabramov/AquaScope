@@ -93,8 +93,13 @@ class ClockOfreWater extends Component {//таймер замены части �
   class ClockOfFood extends Component {//таймер кормления рыбок
     constructor(props){
       super(props);
-      this.state={date: this.props.date,
-      date2:  this.props.date2};
+      this.state={
+        date: this.props.date,
+        date2:  this.props.date2,
+        notifDate: this.props.notif,
+        sec: 0
+      
+      };
     }
 
   componentDidMount(){//вызывается после рендера компонента
@@ -109,58 +114,40 @@ class ClockOfreWater extends Component {//таймер замены части �
   
   tick = async() => {//фукнция одного такта
 
-   
-   
   if(this.state.date2[this.props.index].active){
-    if(this.state.date[this.props.index] === 0){
-        let d = this.state.date
-        d[this.props.index] = fishfood
-        this.setState({date: d})//устанавливаем таймер на начальное время отсчёта
-        /*Формируем уведомление пользователю*/
-        try {
-          
-      await AsyncStorage.setItem('dateClock',  JSON.stringify([...d]));
-    } catch (e) {
-      console.log(e)
-    }
-    }
-    else{
-      let d = this.state.date
-      d[this.props.index] = d[this.props.index] - 1
-      this.setState({
-        
-        date: d
-      })
 
-      try {
-       await AsyncStorage.setItem('dateClock',  JSON.stringify([...d]));
-    } catch (e) {
-      console.log(e)
-    }
-    }
-  }
-  else{
-     let d = this.state.date
-      d[this.props.index] = 0
-      this.setState({
-        date: d
-      })
+ let d = this.props.notif;
+    let a = new Date(Date.now())
+    let utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours(), a.getMinutes(), a.getSeconds());
+    let utc2 = Date.UTC(d[this.props.index].year, d[this.props.index].month, d[this.props.index].day, d[this.props.index].hour, d[this.props.index].min, d[this.props.index].sec);
+
+    let seconds = Math.floor((utc2 - utc1) )/ 1000
+
+    seconds += (Math.floor(seconds / 14400) + 2) * 60 * 60 * 4
+  //console.warn(seconds)
+
+   this.setState({
+      sec: seconds
+    })
     
-    try { await AsyncStorage.setItem('dateClock',  JSON.stringify([...d]));
-    } catch (e) {
-      console.log(e)
-    }
-      
+    
+     
+    
   }
+  else
+  this.setState({
+      sec: 0
+    })
+ 
   
 
   }
   
   render(){ //рендер элемента
-    const sec = this.state.date[this.props.index];
+    const sec = this.state.sec
     const hour = Math.floor(sec / 3600)
     const min = Math.floor((sec % 3600) /60)
-    const secs =this.state.date[this.props.index] % 60;
+    const secs =this.state.sec % 60;
     return(
       <Text style = {{color: this.props.color}}>{hour} ч : {min} м: {secs} с</Text>
     )
