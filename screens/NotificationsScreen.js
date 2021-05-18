@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Switch, Dimensions, Button} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from "react-native-vector-icons/Ionicons";
@@ -37,7 +37,7 @@ PushNotification.configure({
 });
 
 
-const showNotificationShedule = (title, message, index, date, id, chanel) => {
+const showNotificationShedule = (title, message, index, id, chanel, time) => {
     PushNotification.createChannel(
       {
         channelId: chanel,
@@ -59,10 +59,10 @@ const showNotificationShedule = (title, message, index, date, id, chanel) => {
           vibrate: true,
           vibration: 300,
           soundName: "default",
-          date: date,
+          date: new Date(Date.now() + time * 1000) ,
           allowWhileIdle: true,
           repeatType: "time",
-          repeatTime: 4 * 60 * 60 * 1000
+          repeatTime: time * 1000
         }
     )
 }
@@ -89,137 +89,51 @@ const showNotification = (title, message, index) => {
       soundName: "default",
     })
 }
-const [notificationsDate, setNotificationsDate] = useState([])
-    const { colors } = useTheme();
-    const screenWidth = Dimensions.get('screen').width;
-    const screenHeight = Dimensions.get('screen').height;
-    const [listData, setListData] = useState([ ]
-      )
-
-        const [active, setActive] = useState(false)
-const [date, setDate] = useState([])
-    const toggleNotification = async(index) => {
-        setActive(data => !data)
-       
+  const [notificationsDate, setNotificationsDate] = useState([])
+  const { colors } = useTheme();
+  const screenWidth = Dimensions.get('screen').width;
+  const screenHeight = Dimensions.get('screen').height;
+  const [listData, setListData] = useState([])
+  const toggleNotification = async(index) => {
+   
         if(listData[index].active){
-           
-
-
- //showNotification("Оповещение выключено", listData[index].title, index)
-            PushNotification.cancelLocalNotifications({id: listData[index].key});
+          PushNotification.cancelLocalNotifications({id: listData[index].key});
         }
         else{
 
-
-
-            setId(index)
-
-            //showDatePicker()
-
-            /*let date = new Date(Date.now())
-            
-            let hours = 13 - date.getHours();
-            let min = 59 - date.getMinutes();
-            let sec = 60 - date.getSeconds();
-
-            date = new Date(Date.now() + (hours * 3600 + min * 60 + sec) * 1000)
-            let chanel = "com.aquascope" + listData[index].key
-            showNotificationShedule("Оповещение установлено", listData[index].title, index, date, listData[index].key, chanel)*/
-       
-          //console.warn(utc2 - utc1);
-      
-
-      
-    
-          let date = new Date(Date.now() + 4 * 60 * 60 * 1000) 
           let chanel = "com.aquascope" + listData[index].key
-          showNotificationShedule("Оповещение", listData[index].title, index, date, listData[index].key, chanel)
-       }
-     
-     
-    
-
-
-     
-           
+          showNotificationShedule("Оповещение", listData[index].title, index, listData[index].key, chanel, 60)
+          let notif = notificationsDate
+          let d = new Date(Date.now())
+          notif[index] = {
+            year: d.getFullYear(),
+            month: d.getMonth(),
+            day: d.getDate(),
+            hour: d.getHours(),
+            min: d.getMinutes(),
+            sec: d.getSeconds()
+          }
+          try {
+            await AsyncStorage.setItem('notificationsDate', JSON.stringify([...notif]))
+          } catch (e) { console.log(e) }
+          setNotificationsDate([...notif])  
+        }  
         let data = listData
         data[index].active = !data[index].active
-        setListData(data)
-         try {
-        await AsyncStorage.setItem('notifications', JSON.stringify([...data]))
-         } catch (e) { console.log(e) }
+        setListData([...data])
+        try {
+          await AsyncStorage.setItem('notifications', JSON.stringify([...data]))
+        } catch (e) { console.log(e) }
+  }
 
-
-if(listData[index].active){
-          let notif = notificationsDate
-         let d = new Date(Date.now())
-         notif[index] = {
-            year: d.getFullYear(),
-           month: d.getMonth(),
-           day: d.getDate(),
-           hour: d.getHours(),
-           min: d.getMinutes(),
-           sec: d.getSeconds()
-         }
-
-         try {
-        await AsyncStorage.setItem('notificationsDate', JSON.stringify([...notif]))
-         } catch (e) { console.log(e) }
-
-         setNotificationsDate([...notif])
-
-}
-    }
-
-
-const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
-
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-    setTimePickerVisibility(true)
-  };
-
-   const hideTimePicker = () => {
-    setTimePickerVisibility(false);
-  };
-
-  const [day, setDay] = useState()
-  const [time, setTime] = useState()
-
-  const [id, setId] = useState()
-
-
-  
-  const handleConfirm = (date) => {
-   // console.warn("A date has been picked: ", date);
-    hideDatePicker();
-    setDay(date);
-  };
-
-  const [isLoading, setLoading] = useState(false)
- 
-  React.useEffect( () => {
+ useEffect( () => {
     setTimeout(async() => {
-      try {
-        setDate([...JSON.parse(await AsyncStorage.getItem('dateClock'))])
-      
-    } catch (e) {
-      console.log(e)
-     
-         setDate([0, 0, 0])
-    }
 
       try {
         setNotificationsDate([...JSON.parse(await AsyncStorage.getItem('notificationsDate'))])
       
     } catch (e) {
       console.log(e)
-     
          setNotificationsDate([{
            year: 0,
            month: 0,
@@ -276,54 +190,15 @@ const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
                
             }
         ])}
-  
-  
-   
-
 }, 0)
-setLoading(true)
    }, [])
 
 
-  const handleTimeConfirm = (d) => {
-   // console.warn("A time has been picked: ", date);
-    hideTimePicker();
 
-    setTime(d)
-
-    let a = new Date()
-    let utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours(), a.getMinutes(), a.getSeconds());
-    let utc2 = Date.UTC(day.getFullYear(), day.getMonth(), day.getDate(), d.getHours(), d.getMinutes(), 0);
-
-    let msec = utc2 - utc1
-
-   
-    //console.warn(utc2 - utc1);
-    
-    
-    let date = new Date(Date.now() + utc2 - utc1) 
-    let chanel = "com.aquascope" + listData[id].key
-    showNotificationShedule("Оповещение", listData[id].title, id, date, listData[id].key, chanel)
-  };
 
     return (
         <View style={[styles.container, {marginTop: 50}]}>
 
-<DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-      />
-
-<DateTimePickerModal
-isVisible={isTimePickerVisible}
-  mode="time"
-  locale="RU"
-  date={new Date()}
-  onConfirm={handleTimeConfirm}
-  onCancel={hideTimePicker}
-/>
 
 
             <View style={{  paddingHorizontal: 20, paddingBottom: 0, flexDirection: "row"}}>
@@ -358,13 +233,10 @@ isVisible={isTimePickerVisible}
        
           />
                                    </View>
-{/*<Text>{data.days}:{data.hours}:{data.minutes}:{data.seconds}</Text>*/}
-{
-  isLoading ?
-<ClockOfFood index={index} color={colors.text} date2={listData} date={date} notif={notificationsDate}/>
-: null
 
-}
+
+<ClockOfFood index={index} color={colors.text} date={listData} time={60} notif={notificationsDate}/>
+
                                     </View>
                                 </View>
                             </TouchableOpacity>
