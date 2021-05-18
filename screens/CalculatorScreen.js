@@ -53,6 +53,34 @@ export const CalculatorScreen = ({navigation}) => {
                                         </TouchableOpacity>
 </View>
 
+
+
+
+
+<View style={[styles.item, {backgroundColor: colors.background2}]}>
+                                        <TouchableOpacity onPress={() => {navigation.navigate("ConvertWaterVolume")}} style={{width: '100%'}}
+                                             >
+                                           
+                                          <Paragraph  style={[{color: '#72D695', fontWeight: 'bold', fontSize: 18}]}>Конвертёр объёма воды</Paragraph>
+                                        </TouchableOpacity>
+</View>
+
+<View style={[styles.item, {backgroundColor: colors.background2}]}>
+                                        <TouchableOpacity onPress={() => {navigation.navigate("KNO3")}} style={{width: '100%'}}
+                                             >
+                                           
+                                          <Paragraph  style={[{color: '#72D695', fontWeight: 'bold', fontSize: 18}]}>KNO3</Paragraph>
+                                        </TouchableOpacity>
+</View>
+
+<View style={[styles.item, {backgroundColor: colors.background2}]}>
+                                        <TouchableOpacity onPress={() => {navigation.navigate("MixerRO")}} style={{width: '100%'}}
+                                             >
+                                           
+                                          <Paragraph  style={[{color: '#72D695', fontWeight: 'bold', fontSize: 18}]}>Миксер RO</Paragraph>
+                                        </TouchableOpacity>
+</View>
+
             </ScrollView>
         </View>
     );

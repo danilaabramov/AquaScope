@@ -26,6 +26,9 @@ import { AquariumVolume }from './calculators/AquariumVolume';
 import { CO2Level }from './calculators/CO2Level';
 import { AquariumWater }from './calculators/AquariumWater';
 import {WaterBalance }from './calculators/WaterBalance';
+import {ConvertWaterVolume }from './calculators/ConvertWaterVolume';
+import {MixerRO}from './calculators/MixerRO';
+import {KNO3}from './calculators/KNO3';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import ProfileScreen from "./screens/ProfileScreen";
@@ -131,7 +134,6 @@ const App = () => {
 
         },
         toggleTheme: () => {
-            //setIsDarkTheme(isDarkTheme => !isDarkTheme)
             setIsDarkTheme(Appearance.getColorScheme() === "dark")
         }
     }), []);
@@ -229,6 +231,9 @@ const App = () => {
                                 <Drawer.Screen name="CO2Level" component={CO2Level} />
                                 <Drawer.Screen name="AquariumWater" component={AquariumWater} />
                                 <Drawer.Screen name="WaterBalance" component={WaterBalance} />
+                                <Drawer.Screen name="ConvertWaterVolume" component={ConvertWaterVolume} />
+                                <Drawer.Screen name="KNO3" component={KNO3} />
+                                <Drawer.Screen name="MixerRO" component={MixerRO} />
                             </Drawer.Navigator>
                         : <RootStackScreen/>
                     }

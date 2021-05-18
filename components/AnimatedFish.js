@@ -42,92 +42,92 @@ export const AnimatedFish = ({height, raznica, children}) => {
             y: height/2.65
         },
         {
-            x: height/9.5 + 60,
-            y: height/2.75
+            x: height/9.5 ,
+            y: height/2.75+ 60
         },
         {
-            x: height/9  + 60,
-            y: height/2.84
+            x: height/9 ,
+            y: height/2.84 + 60
         },
         {
-            x: height/8.5  + 60,
-            y: height/2.95
+            x: height/8.5 ,
+            y: height/2.95 + 60
         },
         {
-            x: height/8 + 60,
-            y: height/3.09 
+            x: height/8,
+            y: height/3.09  + 60
         },
         {
-            x: height/7.5 + 60,
-            y: height/3.24 
+            x: height/7.5,
+            y: height/3.24  + 60
         },
         {
-            x: height/7 + 60,
-            y: height/3.4 
+            x: height/7,
+            y: height/3.4  + 60
         },
         {
-            x: height/6.5 + 60,
-            y: height/3.64 
+            x: height/6.5,
+            y: height/3.64  + 60
         },
         {
-            x: height/6+ 60,
-            y: height/3.85 
+            x: height/6,
+            y: height/3.85 + 60
         },
         {
-            x: height/5.5+ 60,
-            y: height/4.15 
+            x: height/5.5,
+            y: height/4.15 + 60
         },
         {
-            x: height/5 + 60,
-            y: height/4.55 
+            x: height/5,
+            y: height/4.55  + 60
         },
         {
-            x: height/4.5 + 60,
-            y: height/5
+            x: height/4.5 ,
+            y: height/5+ 60
         },
         {
-            x: height/4  + 60,
-            y: height/5.6
+            x: height/4  ,
+            y: height/5.6+ 60
         },
         {
-            x: height/3.5  + 60,
-            y: height/6.45
+            x: height/3.5  ,
+            y: height/6.45+ 60
         },
         {
-            x: height/3 + 60,
-            y: height/7.55
+            x: height/3 ,
+            y: height/7.55+ 60
         },
         {
-            x: height/2.5 + 60,
-            y: height/9
+            x: height/2.5,
+            y: height/9 + 60
         },
         {
-            x: height/2.25 + 60,
-            y: height/8.9
+            x: height/2.25 ,
+            y: height/8.9+ 60
         },
         {
             x: height/2 ,
             y: height/7.65
         },
         {
-            x: height/1.9 - 60,
-            y: height/7.01
+            x: height/1.9,
+            y: height/7.01 + 60
         },
         {
-            x: height/1.8 - 60,
-            y: height/6.25
+            x: height/1.8,
+            y: height/6.25 + 60
         },
         {
-            x: height/1.7 - 60,
-            y: height/5.46
+            x: height/1.7,
+            y: height/5.46 + 60
         },
         {
-            x: height/1.6 - 60,
-            y: height/4.62
+            x: height/1.6,
+            y: height/4.62 + 60
         },
         {
-            x: height/1.5 - 60,
-            y: height/3.82
+            x: height/1.5,
+            y: height/3.82 + 60
         },
         {
             x: height/1.4,
@@ -212,6 +212,21 @@ export const AnimatedFish = ({height, raznica, children}) => {
         }).start();
     }
 
+function GaussRand() {
+
+    var s = 2*Math.random()-1;
+
+    var m = 2*Math.random()-1;
+
+    var u = s*s + m*m;
+
+    if(u == 0 || u > 1) return GaussRand();
+
+    var k = Math.sqrt(-2*Math.log(u)/u);
+
+return s*m;
+}
+
     function normal_random(){
         var pos = [ Math.random(), Math.random() ];
         while ( Math.sin( pos[0] * Math.PI ) > pos[1]) pos = [ Math.random(), Math.random() ];
@@ -220,7 +235,7 @@ export const AnimatedFish = ({height, raznica, children}) => {
 
     function getRandomFloat(min, max) {
         let ran = 0
-        for(let i = 0; i < 1; ++i) ran += normal_random()
+        for(let i = 0; i < 1; ++i) ran += Math.random()
         return ran / 1 * (max - min) + min;
     }
 

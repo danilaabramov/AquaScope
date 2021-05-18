@@ -85,11 +85,16 @@ export const ManualScreen = ({navigation, useFocusEffect}) => {
                               {
                                   item.title === '' || item.title === null ? null :
                                   <Paragraph style={[
-                                   {color: /*'#899FFE'*/"white", fontWeight: 'bold', fontSize: 30, paddingTop: 10}]}>{item.title}</Paragraph>
+                                   {color: /*'#899FFE'*/"white", fontWeight: 'bold', fontSize: 30, paddingTop: 10, textShadowColor: '#000',
+  textShadowOffset: {width: -1, height: 1},
+  textShadowRadius: 5}]}>{item.title}</Paragraph>
                                      }
                                        {
                                              item.details === '' || item.details === null ? null :
-                                               <Caption style={[ {height: 50, color: "#f0f0f0", maxHeight: 40
+                                               <Caption style={[ {height: 50, color: "#FFDB70", maxHeight: 40,
+                                               textShadowColor: '#000',
+  textShadowOffset: {width: -1, height: 1},
+  textShadowRadius: 5
 }]}>
                                                        {item.details}</Caption>
                                                 }
