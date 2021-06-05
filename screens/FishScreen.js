@@ -36,7 +36,7 @@ export const FishScreen = ({navigation}) => {
             } catch (e) { console.log(e) }
             setIsLoading(true)
             navigation.navigate("HomeDrawer")
-        }, 1000)
+        }, 0)
         }
         return () => cleanupFunction = true;
     }, [])
@@ -162,13 +162,13 @@ export const FishScreen = ({navigation}) => {
                     </View>
                 }
                 {
-                    !isLoading ? null : <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
+                    !isLoading ? null : <ScrollView  showsVerticalScrollIndicator={false} contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
                         <View style={styles.tasksWrapper}>
                             <View style={styles.items}>
                                 {
                                     fishItems.map((item, index) => {
                                         return (
-                                            <TouchableOpacity onPress={() => openModalFish(index)} key={index}
+                                            <TouchableOpacity activeOpacity={0.8} onPress={() => openModalFish(index)} key={index}
                                             style={[styles.item, {backgroundColor: colors.background2}]}>
                                                 <View style={[styles.itemLeft, {width: '75%'}]}>
                                                     <View style={[styles.square]}>
@@ -217,7 +217,7 @@ export const FishScreen = ({navigation}) => {
                 {
                     !isLoading ? null: <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
                     style={styles.writeTaskWrapper}>
-                        <TouchableOpacity onPress={() => openModal()}>
+                        <TouchableOpacity activeOpacity={0.8} onPress={() => openModal()}>
                             <View style={[styles.addWrapper, {backgroundColor: theme.dark ? '#004943' : '#009387', marginRight: 20}]}>
                                 <Text style={[styles.addText, {color: "white"}]}>+</Text>
                             </View>
@@ -232,16 +232,21 @@ export const FishScreen = ({navigation}) => {
                             <MaterialCommunityIcons name="arrow-left" size={35} color={colors.text}/>
                         </TouchableOpacity>
                         {
-                            isModalFish ? <TouchableOpacity style={[styles.closeBtnWrapper, {width: screenWidth - 90,alignItems: 'flex-end'}]} onPress={() => changeFish(modalIndex)}>
+                            isModalFish ? 
+                              <View style={{  width: screenWidth - 70, alignItems: 'flex-end'}}>
+                              <TouchableOpacity style={[styles.closeBtnWrapper, {width: 50}]} onPress={() => changeFish(modalIndex)}>
                                 <MaterialCommunityIcons style={styles.closeModal} name="check" size={35} color={colors.text}/>
                             </TouchableOpacity>
-                            :<TouchableOpacity style={[styles.closeBtnWrapper, {width: screenWidth - 90,alignItems: 'flex-end'}]} onPress={() => handleAddFish()}>
+                             </View>
+                            :<View style={{  width: screenWidth - 70, alignItems: 'flex-end'}}>
+                            <TouchableOpacity style={[styles.closeBtnWrapper, {width: 50}]} onPress={() => handleAddFish()}>
                                 <MaterialCommunityIcons style={styles.closeModal} name="check" size={35} color={colors.text}/>
                             </TouchableOpacity>
+                               </View>
                         }
 
                     </View>
-                     <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled' style={{padding: 15}}>
+                     <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'  showsVerticalScrollIndicator={false} style={{padding: 15}}>
                     <Text style={{fontSize: 20, marginLeft: 10, color: "#009387"}}>Имя рыбки</Text>
                     <View style={[styles.inputWrapper]}>
                         <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
@@ -251,7 +256,7 @@ export const FishScreen = ({navigation}) => {
                 { 
                     isTabVisible ? <View>
                         <View style={[styles.inputWrapper, styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}>
-                            <TouchableOpacity style={{padding: 10, backgroundColor: colors.background, borderRadius: 20}}
+                            <TouchableOpacity  activeOpacity={0.8} style={{padding: 10, backgroundColor: colors.background, borderRadius: 20}}
                             onPress={() => {Keyboard.dismiss(); setIsTabVisible(vis => !vis)}}>
                                 <View style={{flexDirection: 'row'}}>
                                     <Text style={{color: colors.text, width: '90%', fontSize: 18}}>  {title}</Text>  
@@ -276,10 +281,10 @@ export const FishScreen = ({navigation}) => {
                             </ScrollView>
                         </View>
                     </View>
-                    : <View style={[styles.textInput, styles.inputWrapper, {backgroundColor: colors.background2, padding: 15}]}>
+                    : <View style={[styles.textInput, styles.inputWrapper, {backgroundColor: colors.background2, padding: 0}]}>
                         <TouchableOpacity 
                             onPress={() => setIsTabVisible(vis => !vis)}>
-                            <Text style={{color: colors.text, fontSize: 18}}>{title}</Text>  
+                            <Text style={{color: colors.text, fontSize: 18, padding: 15}}>{title}</Text>  
                         </TouchableOpacity>
                     </View>
                 }
@@ -293,7 +298,7 @@ export const FishScreen = ({navigation}) => {
                                     style={[styles.textInput, {backgroundColor: icon === "FishOrange" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0, margin: 5}]}>
                                     <FishOrange/>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => {setIcon("FishBlue");Keyboard.dismiss()}} 
+                                <TouchableOpacity onPress={() => {setIcon("FishBlue"); Keyboard.dismiss()}} 
                                     style={[styles.textInput, {backgroundColor: icon === "FishBlue" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
                                     <FishBlue/>
                                 </TouchableOpacity>
@@ -317,6 +322,7 @@ export const FishScreen = ({navigation}) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
+                        <View style={{height: 20}}></View> 
                         </ScrollView>
                     </Animatable.View> : null
                 }
@@ -362,7 +368,7 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         backgroundColor: '#FFF',
-        borderRadius: 60,
+        borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#C0C0C0',

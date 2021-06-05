@@ -23,18 +23,18 @@ export const MixerRO = ({navigation}) => {
                 </TouchableOpacity>
                 <Text style={[styles.sectionTitle, {color: colors.text}]}>Миксер RO</Text>
             </View>
-            <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
+            <ScrollView  showsVerticalScrollIndicator={false}>
                 
                 <View>
                     <View style={{flexDirection: 'row'}}>
                         <View style={{justifyContent: 'flex-start', width: '49%', marginRight: '2%'}}>
                             <Text style={{color: '#72D695', marginLeft: 10}}>Желаемый объём воды (литров)</Text>
-                                <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                                <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                                 placeholder="" onChangeText={text => setValue1(text)} value={value1} placeholderTextColor={'#666'} />
                         </View>
                         <View style={{justifyContent: 'flex-end', width: '49%'}}>
                             <Text style={{color: '#72D695', marginLeft: 10}}>Желаемое значение GH</Text>
-                            <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                            <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                             placeholder="" onChangeText={text => setValue2(text)} value={value2} placeholderTextColor={'#666'}/>
                         </View>
                     </View>  
@@ -47,13 +47,13 @@ export const MixerRO = ({navigation}) => {
                     
                     <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}> Значение GH водопроводной воды </Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue3(text)} value={value3} placeholderTextColor={'#666'}/>
                     </View>
 
                     <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}> Значение GH RO воды </Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue4(text)} value={value4} placeholderTextColor={'#666'}/>
                     </View>
 

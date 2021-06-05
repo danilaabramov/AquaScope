@@ -23,7 +23,7 @@ export const AquariumVolume = ({navigation}) => {
                 </TouchableOpacity>
                 <Text style={[styles.sectionTitle, {color: colors.text}]}>Объем аквариума</Text>
             </View>
-            <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
+            <ScrollView  showsVerticalScrollIndicator={false}>
                 <Caption style={[styles.caption, {color: "#9B9B9B"}]}>Прямоугольный аквариум</Caption>
                 <Image style={{ width: screenWidth - 40, height: (screenWidth - 40) / 953 * 499}}
                 source={theme.dark ? require('./AquariumPryamWhite.png') : require('./AquariumPryamBlack.png')}/>
@@ -31,29 +31,29 @@ export const AquariumVolume = ({navigation}) => {
                     <View style={{flexDirection: 'row'}}>
                         <View style={{justifyContent: 'flex-start', width: '49%', marginRight: '2%'}}>
                             <Text style={{color: '#72D695', marginLeft: 20}}>Длина A(cm)</Text>
-                                <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                                <TextInput  keyboardType='numeric'style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                                 placeholder="" onChangeText={text => setLengthA(text)} value={lengthA} placeholderTextColor={'#666'} />
                         </View>
                         <View style={{justifyContent: 'flex-end', width: '49%'}}>
                             <Text style={{color: '#72D695', marginLeft: 20}}>Длина B(cm)</Text>
-                            <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                            <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                             placeholder="" onChangeText={text => setLengthB(text)} value={lengthB} placeholderTextColor={'#666'}/>
                         </View>
                     </View>  
                     <View>
                         <Text style={{color: '#72D695', marginLeft: 20}}>Высота аквариума(cm)</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setHeight(text)} value={height} placeholderTextColor={'#666'}/>
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <View style={{justifyContent: 'flex-start', width: '49%', marginRight: '2%'}}>
                             <Text style={{color: '#72D695', marginLeft: 20}}>Толщина стекла(mm)</Text>
-                            <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                            <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                             placeholder="" onChangeText={text => setThickness(text)} value={thickness} placeholderTextColor={'#666'}/>
                         </View>
                         <View style={{justifyContent: 'flex-end', width: '49%'}}>
                             <Text style={{color: '#72D695', marginLeft: 20}}>Высота грунта(cm)</Text>
-                            <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                            <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                             placeholder="" onChangeText={text => setGroundHeight(text)} value={groundHeight} placeholderTextColor={'#666'}/>
                         </View>
                     </View>  

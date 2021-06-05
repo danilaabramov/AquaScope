@@ -1,13 +1,21 @@
-import React, {useState, useEffect} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions, Image } from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {Easing, View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions, Image, Animated, Pressable} from 'react-native';
 import { useTheme } from "@react-navigation/native";
 import Manual from '../model/Manual';
 import {Caption, Paragraph} from "react-native-paper";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Animatable from "react-native-animatable";
 import Icon from "react-native-vector-icons/Ionicons";
-import { CalculatorScreen } from './CalculatorScreen';
 import {useIsFocused, useFocusEffect} from '@react-navigation/native'
+import ImageZoom from 'react-native-image-pan-zoom';
+import ZoomImage from 'react-native-zoom-image'
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import SafeAreaView from 'react-native-safe-area-view';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AnimatedHeader from 'react-native-animated-header';
+
+
+
 const screenWidth = Dimensions.get('screen').width;
     const screenHeight = Dimensions.get('screen').height;
 export const ManualScreen = ({navigation, useFocusEffect}) => {
@@ -29,56 +37,43 @@ export const ManualScreen = ({navigation, useFocusEffect}) => {
     );
 
 
+    
+const offset = useRef(new Animated.Value(250)).current;
+    
 
 
-    const [title, setTitle] = useState(null)
-    const [details, setDetails] = useState(null)
-    const [patch, setPatch] = useState(null)
-    const [modalIndex, setModalIndex] = useState(null)
 
-    const openModalFish =  (index) => {
-        setTitle(listData[index].title === null ? "" : listData[index].title)
-        setDetails(listData[index].details === null ? "" : listData[index].details)
-        setPatch(listData[index].patch === null ? "" : listData[index].patch)
-        setModalIndex(index)
-        setIsModalVisible(true);
-    }
-
-    const closeModal = () => {
-       
-        
-         setIsModalVisible(false);
-     }
-
-    const [isModalVisible, setIsModalVisible] = useState(false)
     return (
 
-        <View style={[styles.container, {marginTop: 50}]}>
+<AnimatedHeader 
+        style={{flex: 1, marginTop: 20, paddingHorizontal: 10}}
+        title='Мануал'
+        renderLeft={() => ( <TouchableOpacity onPress={() => {navigation.openDrawer()}} style={{height: 50, width: 50, marginTop: 15, marginLeft: 20}}>
+                    <Icon name="ios-menu" size={35}  color={colors.text}/>
+                </TouchableOpacity>)}
+        backStyle={{ left: 0 }}
+        backTextStyle={{fontSize: 18, color: '#000'}}
+        titleStyle={{ fontSize: 25, left: 30, bottom: 20, color: colors.text, fontWeight: 'bold' }}
+        headerMaxHeight={120}
+        toolbarColor={colors.background}
+        disabled={false}
+        noBorder={true}
+      >
 
 
- <View style={{ paddingHorizontal: 20, flexDirection: "row", marginBottom: -3}}>
-
- <Icon.Button name="ios-menu" size={35}  color={colors.text} backgroundColor={colors.background} onPress={() => {
-                        navigation.openDrawer()}}
-                    />
-                    <Text style={[styles.sectionTitle, {color: colors.text, marginTop: 6}]}>Мануал</Text></View>
-
-
-
-                    <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled' style={{paddingTop: 20, paddingHorizontal: 10}}>
-         { 
+                    <ScrollView  showsVerticalScrollIndicator={false} contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled' >
+        {
             listData.map((item, index) => {
                   return (
                       
                        <View key={index}
-                       style={[styles.item, {backgroundColor: colors.background2}]}>
-                        <TouchableOpacity onPress ={() =>  openModalFish(index)} style={[styles.itemLeft]}>
+                       style={[styles.item, {backgroundColor: colors.background2, width: screenWidth - 20, height: 200, borderRadius: 10}]}>
+                        <TouchableOpacity  activeOpacity={0.9} onPress ={() =>  navigation.navigate('FishManual', { id: index })} style={[styles.itemLef, {twidth: screenWidth - 20, height: 200, borderRadius: 10}]}>
                          
-                         
-                          <Image style={{ /*marginLeft: 5, marginRight: 10, */width: screenWidth - 20, height: 200, borderRadius: 10}}
+       
+                          <Image resizeMode="stretch" style={{ /*marginLeft: 5, marginRight: 10, */flex: 1, width: screenWidth - 20, height: 200, borderRadius: 10}}
                    source={item.patch}/>
-
-
+        
 
                         
                              <View style={{width:  screenWidth - 60, position: 'absolute', bottom: 0, left: 20}}>
@@ -104,40 +99,14 @@ export const ManualScreen = ({navigation, useFocusEffect}) => {
                                      )
                                 })
          }
-                <View style={{height: 20}}></View>            
+                            
 </ScrollView>
 
 
 
 
+         </AnimatedHeader>    
 
-          { isModalVisible ? <Animatable.View animation="lightSpeedIn"
-             style={[styles.modelContentWrapper, {backgroundColor: colors.background}]}>
-           
-
-               <View style={{marginTop: 5,  paddingHorizontal: 20, paddingBottom: 10, flexDirection: "row"}}>
-                 <TouchableOpacity style={{height: '100%', width: 50}} onPress={() => closeModal()} >
-                  <MaterialCommunityIcons name="arrow-left" size={35} color={colors.text}/>
-                   </TouchableOpacity>
-                    <Text style={[styles.sectionTitle, {color: colors.text}]}>{title}</Text></View>
-
-
-
-  <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled' >
-
-  <Image style={{ /*marginLeft: 10, marginRight: 10, */width: screenWidth, /*borderRadius: 20,*/ height: 300}}
-                   source={patch}/>
-
-
-                    <View style={styles.tasksWrapper}>
-                    <View style={styles.items}>
-                     <Text style={{color: colors.text/*, textAlign: 'justify'*/, fontSize: 20}}>{details}</Text>
-            
-                     </View>
-                      </View>
-                          </ScrollView>
-                           </Animatable.View> : null }        
-        </View>
     );
 };
 
@@ -223,6 +192,7 @@ const styles = StyleSheet.create({
         width: screenWidth,
         marginTop: 'auto',
         position: 'absolute',
+        zIndex: 1000
     },
     closeModal: {
         width: 40,

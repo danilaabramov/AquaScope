@@ -24,7 +24,7 @@ export const CO2Level = ({navigation}) => {
 
 
 
-         <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled' >
+         <ScrollView  showsVerticalScrollIndicator={false} >
 
          <Image style={{ width: screenWidth - 40, height: (screenWidth - 40) / 809 * 446}}
                 source={theme.dark ? require('./AquariumCO2.jpg') : require('./AquariumCO2.jpg')}/>
@@ -33,7 +33,7 @@ export const CO2Level = ({navigation}) => {
 
 <Text style={{color: '#72D695', marginLeft: 20}}>Текущее значение pH</Text>
 <View style={styles.inputWrapper}>
-  <TextInput
+  <TextInput keyboardType='numeric'
    style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
     placeholder="" onChangeText={text => setPHValue(text)} value={PHValue}
       placeholderTextColor={'#666'} />
@@ -42,7 +42,7 @@ export const CO2Level = ({navigation}) => {
 
        <Text style={{color: '#72D695', marginLeft: 20}}>Текущий уровень KH</Text>
        <View style={styles.inputWrapper}>
-  <TextInput
+  <TextInput keyboardType='numeric'
    style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
     placeholder="" onChangeText={text => setKHLevel(text)} value={KHLevel}
       placeholderTextColor={'#666'}/>

@@ -21,6 +21,8 @@ import {FishScreen} from './screens/FishScreen';
 import {HomeScreen} from './screens/HomeScreen';
 import { AuthContext } from './components/context';
 import { RootStackScreen }from './screens/RootStackScreen';
+import { CreateAquarium }from './screens/CreateAquarium';
+import { FishManual }from './screens/FishManual';
 
 import { AquariumVolume }from './calculators/AquariumVolume';
 import { CO2Level }from './calculators/CO2Level';
@@ -234,6 +236,9 @@ const App = () => {
                                 <Drawer.Screen name="ConvertWaterVolume" component={ConvertWaterVolume} />
                                 <Drawer.Screen name="KNO3" component={KNO3} />
                                 <Drawer.Screen name="MixerRO" component={MixerRO} />
+
+                                <Drawer.Screen name="FishManual" component={FishManual}/>
+                                 <Drawer.Screen name="CreateAquarium" component={CreateAquarium}/>
                             </Drawer.Navigator>
                         : <RootStackScreen/>
                     }

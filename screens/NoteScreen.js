@@ -37,13 +37,13 @@ export const NoteScreen = ({navigation}) => {
 
     return (
         <View style={[styles.container, {backgroundColor: colors.background}]}>
-            <View style={{ paddingTop: 80, paddingHorizontal: 20, paddingBottom: 20, flexDirection: "row"}}>
+            <View style={{ paddingTop: 60, paddingHorizontal: 20, paddingBottom: 20, flexDirection: "row"}}>
             <TouchableOpacity style={{height: '100%', width: 50, }} onPress={() => navigation.goBack()} >
                 <MaterialCommunityIcons name="arrow-left" size={35} color={colors.text}/>
             </TouchableOpacity>
             <Text style={[styles.sectionTitle, {color: colors.text}]}>Заметки</Text></View>
-            <ScrollView
-                contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled' style={{marginBottom: 100}}>
+            <ScrollView showsVerticalScrollIndicator={false} 
+                contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
                 <View style={styles.tasksWrapper}>
                     <View style={styles.items}>
                         {
@@ -65,6 +65,7 @@ export const NoteScreen = ({navigation}) => {
                         }
                     </View>
                 </View>
+                 <View style={{height: 100, width: '100%'}}/>
             </ScrollView>
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.writeTaskWrapper}>
                 <TextInput style={[styles.input, {backgroundColor: colors.background2, color: colors.text}]} placeholder={'Напишите заметку'}

@@ -8,11 +8,13 @@ import AsyncStorage from "@react-native-community/async-storage";
     constructor(props){
       super(props);
       this.state={
-        sec: 0
+        sec: 0,
+        state: this.props.data[this.props.index].active
       };
     }
 
   componentDidMount(){//вызывается после рендера компонента
+  this.tick()
   this.timerID = setInterval(
     ()=> this.tick(),1000
   )
@@ -20,10 +22,19 @@ import AsyncStorage from "@react-native-community/async-storage";
   componentWillUnmount(){//вызывается в случае удаления компонента
   clearInterval(this.timerID);
   }
-  
-  tick = async() => {//фукнция одного такта
 
-  if(this.props.date[this.props.index].active){
+  componentDidUpdate() {
+    if(this.state.state != this.props.data[this.props.index].active){
+      this.tick()
+      this.setState({
+      state: this.props.data[this.props.index].active
+    })  
+    }
+ }
+  
+  tick = () => {//фукнция одного такта
+
+  if(this.props.data[this.props.index].active){
     let d = this.props.notif;
     let a = new Date(Date.now())
     let utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours(), a.getMinutes(), a.getSeconds());
@@ -42,11 +53,12 @@ import AsyncStorage from "@react-native-community/async-storage";
   }
   render(){ //рендер элемента
     const sec = this.state.sec
-    const hour = Math.floor(sec / 3600)
+    const days = Math.floor(sec / 3600 / 24)
+    const hour = Math.floor(sec % (3600 * 24) / 3600)
     const min = Math.floor((sec % 3600) /60)
     const secs =this.state.sec % 60;
     return(
-      <Text style = {{color: this.props.color}}>{hour} ч : {min} м: {secs} с</Text>
+      <Text style = {{color: this.props.color}}>{days} д : {hour} ч : {min} м: {secs} с</Text>
     )
   }
   }

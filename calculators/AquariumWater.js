@@ -26,7 +26,7 @@ export const AquariumWater = ({navigation}) => {
 
 
 
-         <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled' >
+         <ScrollView  showsVerticalScrollIndicator={false}>
              
 
 
@@ -34,7 +34,7 @@ export const AquariumWater = ({navigation}) => {
 
 <Text style={{color: '#72D695', marginLeft: 20, marginTop: 5}}>Объём аквариума (литров)</Text>
 <View style={styles.inputWrapper}>
-  <TextInput
+  <TextInput keyboardType='numeric'
    style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
     placeholder="" onChangeText={text => setVolumeA(text)} value={VolumeA}
       placeholderTextColor={'#666'} />
@@ -43,7 +43,7 @@ export const AquariumWater = ({navigation}) => {
 
        <Text style={{color: '#72D695', marginLeft: 20, marginTop: 5}}>Фактический объём (литров)</Text>
        <View style={styles.inputWrapper}>
-  <TextInput
+  <TextInput keyboardType='numeric'
    style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
     placeholder="" onChangeText={text => setVolumeB(text)} value={VolumeB}
       placeholderTextColor={'#666'}/>
@@ -52,7 +52,7 @@ export const AquariumWater = ({navigation}) => {
      
 <Text style={{color: '#72D695', marginLeft: 20, marginTop: 5}}>Процент подмены воды(%)</Text>
 <View style={styles.inputWrapper}>
-  <TextInput
+  <TextInput keyboardType='numeric'
    style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
     placeholder="" onChangeText={text => setPercent(text)} value={percent}
       placeholderTextColor={'#666'}/>

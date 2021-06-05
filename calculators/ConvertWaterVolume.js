@@ -23,7 +23,7 @@ export const ConvertWaterVolume = ({navigation}) => {
                 </TouchableOpacity>
                 <Text style={[styles.sectionTitle, {color: colors.text}]}>Конвертёр объёма воды</Text>
             </View>
-            <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
+            <ScrollView  showsVerticalScrollIndicator={false}>
 
 
                      <View>
@@ -32,7 +32,7 @@ export const ConvertWaterVolume = ({navigation}) => {
 
                      <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Объём воды (литров)</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue1(text)} value={value1} placeholderTextColor={'#666'}/>
                     </View>
 
@@ -57,7 +57,7 @@ export const ConvertWaterVolume = ({navigation}) => {
 
                      <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Объём воды (миллилитров)</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue2(text)} value={value2} placeholderTextColor={'#666'}/>
                     </View>
 
@@ -84,7 +84,7 @@ export const ConvertWaterVolume = ({navigation}) => {
 
                      <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Объём воды (галлонов(брит.))</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue3(text)} value={value3} placeholderTextColor={'#666'}/>
                     </View>
 
@@ -109,7 +109,7 @@ export const ConvertWaterVolume = ({navigation}) => {
 
                      <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Объём воды (жидких унций(брит.))</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue4(text)} value={value4} placeholderTextColor={'#666'}/>
                     </View>
 
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         width: 250,
     },
     sectionTitle: {
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: 'bold'
     },
 });

@@ -17,34 +17,49 @@ export const MainTabScreen = () => {
     const theme = useTheme();
     const { colors } = useTheme();
     return  (
-        <Tab.Navigator initialRouteName="Home" activeColor="#fff" barStyle={{backgroundColor: 'tomato'}}>
+        <Tab.Navigator labeled={false} initialRouteName="Home" activeColor="#fff" barStyle={{backgroundColor: 'tomato'}} inactiveColor={theme.dark ? "rgba(255, 255, 255, .5)" : "rgba(0, 0, 0, .5)"}>
             <Tab.Screen name="Home"  component={HomeScreen} options={{
                 tabBarLabel: 'Аквариум',
                 tabBarColor: theme.dark ? '#00544D' : '#009387',
-                tabBarIcon: ({color}) => (
+                tabBarIcon: ({focused, color}) => (
+                    focused ?
+                    <View style={{backgroundColor: theme.dark ? '#002A26' : '#004943', paddingHorizontal: 15, paddingVertical: 2, borderRadius: 20, height: 29, width: 55, marginTop: -2}}>
                         <MaterialCommunityIcons name="fishbowl" color={color} size={25}/>
-                      
+                      </View>
+                      : <MaterialCommunityIcons name="fishbowl" color={color} size={25}/>
                 ),
             }}/>
             <Tab.Screen name="Notifications" component={NotificationsScreen} options={{
                 tabBarLabel: 'Оповещения',
-                tabBarColor: theme.dark ? '#6777BF' : '#899FFE',//'#0F327F' : '#1f65ff',
-                tabBarIcon: ({color}) => (
+                tabBarColor: colors.background,//theme.dark ? '#6777BF' : '#899FFE',
+                tabBarIcon: ({focused, color}) => (
+                       focused ?
+                    <View style={{backgroundColor: /*theme.dark ? '#6777BF' : */'#899FFE', paddingHorizontal: 15, paddingVertical: 2, borderRadius: 20, height: 29, width: 55, marginTop: -2}}>
                     <Icon name="ios-notifications" color={color} size={25}/>
+                                          </View>
+                                          :<Icon name="ios-notifications" color={color} size={25}/>
                 ),
             }}/>
             <Tab.Screen name="Calculator" component={CalculatorScreen} options={{
                 tabBarLabel: 'Калькулятор',
-                tabBarColor:  theme.dark ? '#509668' : '#72D695',//'#396A4A' : '#427E04',
-                tabBarIcon: ({color}) => (
+                tabBarColor: colors.background,// theme.dark ? '#509668' : '#72D695',
+                tabBarIcon: ({focused, color}) => (
+                        focused ?
+                    <View style={{backgroundColor: /*theme.dark ? '#509668' : */'#72D695', paddingHorizontal: 15, paddingVertical: 2, borderRadius: 20, height: 29, width: 55, marginTop: -2}}>
                     <MaterialCommunityIcons name="calculator-variant" color={color} size={25}/>
+                    </View>
+                                          : <MaterialCommunityIcons name="calculator-variant" color={color} size={25}/>
                 ),
             }}/>
             <Tab.Screen name="Manual"  component={ManualScreen} options={{
                 tabBarLabel: 'Мануал',
-                tabBarColor: theme.dark ? '#BFA454' : '#FFDB70',//'#434E7E' : '#899FFE',
-                tabBarIcon: ({color}) => (
+                tabBarColor: colors.background,//theme.dark ? '#BFA454' : '#FFDB70',
+                tabBarIcon: ({focused, color}) => (
+                     focused ?
+                    <View style={{backgroundColor: /*theme.dark ? '#BFA454' : */'#FFDB70', paddingHorizontal: 15, paddingVertical: 2, borderRadius: 20, height: 29, width: 55, marginTop: -2}}>
                     <MaterialCommunityIcons name="book-open-page-variant" color={color} size={25}/>
+                     </View>
+                                          :   <MaterialCommunityIcons name="book-open-page-variant" color={color} size={25}/>
                 ),
             }}/>
         </Tab.Navigator>
