@@ -14,6 +14,7 @@ import {Caption, Paragraph} from "react-native-paper";
 import AsyncStorage from "@react-native-community/async-storage";
 import LottieView from 'lottie-react-native'
 import fishList from '../model/Manual';
+import PushNotification from "react-native-push-notification";
 
 export const FishScreen = ({navigation}) => {
     const {colors} = useTheme();
@@ -26,8 +27,128 @@ export const FishScreen = ({navigation}) => {
     const [icon, setIcon] = useState("FishClown")
     const [fishItems, setFishItems] = useState([]);
     const[isLoading, setIsLoading] = useState(false)
+  const [notificationsDate, setNotificationsDate] = useState([])
+     const [listNotification, setListNotification] = useState([])
+
+
+PushNotification.configure({
+    onRegister: function (token) {
+      console.log("TOKEN:", token);
+    },
+    onNotification: function (notification) {
+      console.log("NOTIFICATION:", notification);
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
+    },
+    onAction: function (notification) {
+      console.log("ACTION:", notification.action);
+      console.log("NOTIFICATION:", notification);
+    },
+    onRegistrationError: function(err) {
+      console.error(err.message, err);
+    },
+    permissions: {
+      alert: true,
+      badge: true,
+      sound: true,
+    },
+    popInitialNotification: true,
+    requestPermissions: true,
+});
+
+    const showNotificationShedule = (title, message, index, id, chanel, time, time2) => {
+    PushNotification.createChannel(
+      {
+        channelId: chanel,
+        channelName: chanel,
+        channelDescription: "A chanel to categorise your notifications",
+        playSound: false,
+        soundName: "default",
+        importance: 4,
+        vibrate: true,
+         
+      }
+    )
+
+    PushNotification.localNotificationSchedule(
+       {
+           id: id,
+           channelId: chanel,
+           title: title,
+          message: message,
+          vibrate: true,
+          vibration: 300,
+          soundName: "default",
+          date: new Date(Date.now() + time2 * 1000) ,
+          allowWhileIdle: true,
+          repeatType: "time",
+          repeatTime: time * 1000,
+          groupSummary: true,
+          ignoreInForeground: true,
+        }
+    )
+}
 
     useEffect( () => {
+ setTimeout(async() => {
+
+try {
+        let data = [...JSON.parse(await AsyncStorage.getItem('notifications'))]
+        setListNotification([...data]);
+
+         } catch (e) { console.log(e) 
+         setListNotification( [
+      
+            {
+                key: 1,
+                title: 'Покормить рыбок',
+                active: false
+            },
+            {
+                key: 2,
+                title: 'Почистить аквариум',
+                active: false
+               
+            },
+            {
+                key: 3,
+                title: 'Поменять воду в аквариуме',
+                active: false
+               
+            }
+        ])}
+
+
+try {
+        setNotificationsDate([...JSON.parse(await AsyncStorage.getItem('notificationsDate'))])
+      
+    } catch (e) {
+      console.log(e)
+         setNotificationsDate([{
+           year: 0,
+           month: 0,
+           day: 0,
+           hour: 0,
+           min: 0,
+           sec: 0
+         },
+         {
+           year: 0,
+           month: 0,
+           day: 0,
+           hour: 0,
+           min: 0,
+           sec: 0
+         },
+         {
+           year: 0,
+           month: 0,
+           day: 0,
+           hour: 0,
+           min: 0,
+           sec: 0
+         }])
+    }
+        }, 0)
         let cleanupFunction = false;
         if(!cleanupFunction){
             setTimeout(async() => {
@@ -42,6 +163,42 @@ export const FishScreen = ({navigation}) => {
     }, [])
 
     const handleAddFish = async () => {
+
+
+            let time = 0
+            let capacity = 0
+            try {
+              let aqua = [...JSON.parse(await AsyncStorage.getItem('Aquarium'))]
+            capacity = aqua[0].capacity
+            } catch (e) { 
+            console.log(e) }
+
+            if(capacity < 70) time = 60 * 60 * 168
+            else if(capacity >= 70 && capacity < 100) time = 60 * 60 * 336
+            else time = 60 * 60 * 672
+            let fishes = []
+               try {
+              fishes = [...JSON.parse(await AsyncStorage.getItem('fishItems'))]
+            } catch (e) { console.warn(e) }
+            if(capacity < 70) time += 0
+            else if(capacity >= 70 && capacity < 100) time -= (fishes.length + 1) * 0.5 * 60 * 60
+            else time -= (fishes.length + 1) * 0.3 * 60 * 60
+            let d = notificationsDate
+            let a = new Date(Date.now())
+            let utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours(), a.getMinutes(), a.getSeconds())
+            let utc2 = Date.UTC(d[1].year, d[1].month, d[1].day, d[1].hour, d[1].min, d[1].sec)
+            let seconds = Math.floor((utc2 - utc1) / 1000)
+            seconds += (Math.abs(Math.floor(seconds / time))) * time
+            if(listNotification[1].active){
+                PushNotification.cancelLocalNotifications({id: listNotification[1].key});
+                let chanel = "com.aquascope" + listNotification[1].key
+                showNotificationShedule("Оповещение", listNotification[1].title, 1, listNotification[1].key, chanel, time, seconds)
+            }  
+
+    
+
+
+
         let data = {
             key: fishItems.length.toString(),
             name: name,
@@ -64,6 +221,37 @@ export const FishScreen = ({navigation}) => {
     }
 
     const completeFish = async (index) => {
+            let time = 0
+            let capacity = 0
+            try {
+              let aqua = [...JSON.parse(await AsyncStorage.getItem('Aquarium'))]
+            capacity = aqua[0].capacity
+            } catch (e) { 
+            console.log(e) }
+
+            if(capacity < 70) time = 60 * 60 * 168
+            else if(capacity >= 70 && capacity < 100) time = 60 * 60 * 336
+            else time = 60 * 60 * 672
+            let fishes = []
+               try {
+              fishes = [...JSON.parse(await AsyncStorage.getItem('fishItems'))]
+            } catch (e) { console.warn(e) }
+            if(capacity < 70) time += 0
+            else if(capacity >= 70 && capacity < 100) time -= (fishes.length - 1) * 0.5 * 60 * 60
+            else time -= (fishes.length - 1) * 0.3 * 60 * 60
+            let d = notificationsDate
+            let a = new Date(Date.now())
+            let utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours(), a.getMinutes(), a.getSeconds())
+            let utc2 = Date.UTC(d[1].year, d[1].month, d[1].day, d[1].hour, d[1].min, d[1].sec)
+            let seconds = Math.floor((utc2 - utc1) / 1000)
+            seconds += (Math.abs(Math.floor(seconds / time))) * time
+            if(listNotification[1].active){
+                PushNotification.cancelLocalNotifications({id: listNotification[1].key});
+                let chanel = "com.aquascope" + listNotification[1].key
+                showNotificationShedule("Оповещение", listNotification[1].title, 1, listNotification[1].key, chanel, time, seconds)
+            }  
+
+
         let itemsCopy = [...fishItems]
         itemsCopy.splice(index, 1);
         setFishItems(itemsCopy)

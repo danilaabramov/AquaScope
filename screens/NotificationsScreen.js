@@ -65,10 +65,8 @@ const showNotificationShedule = (title, message, index, id, chanel, time) => {
           allowWhileIdle: true,
           repeatType: "time",
           repeatTime: time * 1000,
-        groupSummary: true,
-         ongoing: true,
-         ignoreInForeground: true,
-         onlyAlertOnce: true,
+          groupSummary: true,
+          ignoreInForeground: true,
         }
     )
 }
@@ -141,7 +139,7 @@ const showNotification = (title, message, index) => {
 
       let times = []
 for (let index = 0; index < 3; ++index){
-  let time = 60 * 60 * 24
+  let time = 60 * 60 * 12
       if(index === 1){
             let capacity = 0
             try {
