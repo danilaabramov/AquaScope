@@ -98,16 +98,13 @@ const showNotification = (title, message, index) => {
   const screenWidth = Dimensions.get('screen').width;
   const screenHeight = Dimensions.get('screen').height;
   const [listData, setListData] = useState([])
-    const [timers, setTimers] = useState([])
+  const [timers, setTimers] = useState([])
   const toggleNotification = async(index) => {
    
         if(listData[index].active){
           PushNotification.cancelLocalNotifications({id: listData[index].key});
         }
         else{
-
-      
-
           let chanel = "com.aquascope" + listData[index].key
           showNotificationShedule("Оповещение", listData[index].title, index, listData[index].key, chanel, timers[index])
           let notif = notificationsDate
@@ -224,7 +221,6 @@ setTimers([...times])
                 key: 1,
                 title: 'Покормить рыбок',
                 active: false
-               
             },
             {
                 key: 2,
@@ -272,31 +268,27 @@ setTimers([...times])
                     return (
                         <View style={[styles.item, {backgroundColor: colors.background2}]} key={data.key}>
                             <TouchableOpacity onPress={() => { toggleNotification(index)}} activeOpacity={0.5}>
-                                <View style={{flexDirection: 'row',  alignItems: 'center', justifyContent: 'space-between',}}>
-                                    <View style={[styles.itemLeft, {flexDirection: 'row'}]}>
-                                        <View style={[styles.square]}>
+                                <View style={{ alignItems: 'center', justifyContent: 'space-between',}}>
+                                    <View style={[styles.itemLeft]}>
+                                        <View style={[styles.square, {marginLeft: 10}]}>
                                             <MaterialCommunityIcons name="bell-ring-outline" size={26} color={colors.text}/>
                                         </View>
-
-
-<View>
-                                        <Text style={[styles.itemText, {width: screenWidth - 140, color: '#899FFE'/*'#1f65ff'*/, fontWeight: 'bold', fontSize: 18}]}>{data.title}</Text>
+                                       
+                                        <Text style={[styles.itemText, {width: screenWidth - 109, color: '#899FFE', fontSize: 18}]}>{data.title}</Text>
                 
-                
+                <View style={{flexDirection: 'column'}}>
                 {
-//listData[index].active ?
-<View style={{ height: 20}}>
+<View style={{width: screenWidth - 40}}>
 <ClockOfFood index={index} color={colors.text} data={listData} time={timers[index]} notif={notificationsDate}/>
-</View>  
-//:<View style={{ height: 20, width: 4}}/>
+</View>
                 }
 
 
 
-</View>                
+              
 
 
-                                    <View pointerEvents="none">
+                                    <View pointerEvents="none" style={{marginRight: 20}}>
                                        <Switch trackColor={{ false: "#767577", true: "#81b0ff" }}
         thumbColor={data.active ? '#899FFE' : "#f4f3f4"}
             value={data.active}
@@ -304,7 +296,7 @@ setTimers([...times])
        
           />
                                    </View>
-
+ </View>
                                     </View>
                                 </View>
                             </TouchableOpacity>

@@ -36,10 +36,10 @@ export const CalculatorScreen = ({navigation}) => {
                                           <Paragraph  style={[{color: colors.background2, fontWeight: 'bold', fontSize: 20, padding: 15}]}>Основные</Paragraph>
 </View>
 
-                           <TouchableOpacity onPress={() => {navigation.navigate("AquariumVolume")} } style={{width: '100%', padding: 10}}
+                           <TouchableOpacity onPress={() => {navigation.navigate("AquariumVolume")} } style={{width: '100%'}}
                                                      activeOpacity={0.5}     >
                                        
-                                          <Paragraph  style={[{color:  colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 15}]}> Объем аквариума</Paragraph>
+                                          <Paragraph  style={[{color:  colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}> Объем аквариума</Paragraph>
                                         
                                         
                                         
@@ -48,28 +48,28 @@ export const CalculatorScreen = ({navigation}) => {
 
 
 
-                                        <TouchableOpacity onPress={() => {navigation.navigate("CO2Level")}} style={{width: '100%', padding: 10}}
+                                        <TouchableOpacity onPress={() => {navigation.navigate("CO2Level")}} style={{width: '100%'}}
                                            activeOpacity={0.5}  >
                                            
-                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 15}]}>Уровень СО2</Paragraph>
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>Уровень СО2</Paragraph>
                                         </TouchableOpacity>
 
-                                        <TouchableOpacity onPress={() => {navigation.navigate("WaterBalance")}} style={{width: '100%', padding: 10}}
+                                        <TouchableOpacity onPress={() => {navigation.navigate("WaterBalance")}} style={{width: '100%'}}
                                            activeOpacity={0.5}  >
                                            
-                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 15}]}>Водный баланс RO</Paragraph>
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>Водный баланс RO</Paragraph>
                                         </TouchableOpacity>
 
-                                        <TouchableOpacity onPress={() => {navigation.navigate("AquariumWater")}} style={{width: '100%', padding: 10}}
+                                        <TouchableOpacity onPress={() => {navigation.navigate("AquariumWater")}} style={{width: '100%'}}
                                                     activeOpacity={0.5}      >
                                            
-                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 15}]}>Подмена воды</Paragraph>
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>Подмена воды</Paragraph>
                                         </TouchableOpacity>
 
-                                        <TouchableOpacity onPress={() => {navigation.navigate("MixerRO")}} style={{width: '100%', padding: 10}}
+                                        <TouchableOpacity onPress={() => {navigation.navigate("MixerRO")}} style={{width: '100%'}}
                                            activeOpacity={0.5}  >
                                            
-                                          <Paragraph  style={[{color: colors.text, fontSize: 20, padding: 15}]}>Миксер RO</Paragraph>
+                                          <Paragraph  style={[{color: colors.text, fontSize: 20, padding: 25}]}>Миксер RO</Paragraph>
                                         </TouchableOpacity>
 </View>
 
@@ -83,10 +83,28 @@ export const CalculatorScreen = ({navigation}) => {
                                            
                                           <Paragraph  style={[{color: colors.background2, fontWeight: 'bold', fontSize: 20, padding: 15}]}>Калькуляторы сухой соли</Paragraph>
 </View>
-                                        <TouchableOpacity onPress={() => {navigation.navigate("KNO3")}} style={{width: '100%', padding: 10}}
+                                        <TouchableOpacity onPress={() => {navigation.navigate("KNO3")}} style={{width: '100%'}}
                                            activeOpacity={0.5}  >
                                            
-                                          <Paragraph  style={[{color: colors.text, fontSize: 20, padding: 15}]}>KNO3</Paragraph>
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>KNO3</Paragraph>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity onPress={() => {navigation.navigate("K2SO4")}} style={{width: '100%'}}
+                                           activeOpacity={0.5}  >
+                                           
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>K2SO4</Paragraph>
+                                        </TouchableOpacity>
+
+                                         <TouchableOpacity onPress={() => {navigation.navigate("KHCO3")}} style={{width: '100%'}}
+                                           activeOpacity={0.5}  >
+                                           
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>KHCO3</Paragraph>
+                                        </TouchableOpacity>
+
+                                         <TouchableOpacity onPress={() => {navigation.navigate("CaCO3")}} style={{width: '100%'}}
+                                           activeOpacity={0.5}  >
+                                           
+                                          <Paragraph  style={[{color: colors.text, fontSize: 20, padding: 25}]}>CaCO3</Paragraph>
                                         </TouchableOpacity>
 </View>
 
@@ -96,10 +114,28 @@ export const CalculatorScreen = ({navigation}) => {
                                            
                                           <Paragraph  style={[{color: colors.background2, fontWeight: 'bold', fontSize: 20, padding: 15}]}>Конвертёры</Paragraph>
 </View>
-                                        <TouchableOpacity onPress={() => {navigation.navigate("ConvertWaterVolume")}} style={{width: '100%', padding: 10}}
+                                        <TouchableOpacity onPress={() => {navigation.navigate("ConvertWaterVolume")}} style={{width: '100%'}}
                                            activeOpacity={0.5}  >
                                            
-                                          <Paragraph  style={[{color: colors.text, fontSize: 20, padding: 15}]}>Конвертёр объёма воды</Paragraph>
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>Конвертёр объёма воды</Paragraph>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity onPress={() => {navigation.navigate("ConvertTemperature")}} style={{width: '100%'}}
+                                           activeOpacity={0.5}  >
+                                           
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>Конвертёр температуры</Paragraph>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity onPress={() => {navigation.navigate("ConvertLength")}} style={{width: '100%'}}
+                                           activeOpacity={0.5}  >
+                                           
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>Конвертёр длины</Paragraph>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity onPress={() => {navigation.navigate("ConvertWeight")}} style={{width: '100%'}}
+                                           activeOpacity={0.5}  >
+                                           
+                                          <Paragraph  style={[{color: colors.text, fontSize: 20, padding: 25}]}>Конвертёр веса</Paragraph>
                                         </TouchableOpacity>
 </View>
 

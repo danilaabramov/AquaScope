@@ -7,7 +7,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import AsyncStorage from "@react-native-community/async-storage";
 import {useIsFocused, useFocusEffect} from '@react-navigation/native'
 import PushNotification from "react-native-push-notification";
-
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 export const CreateAquarium = ({navigation}) => {
     const {colors} = useTheme();
     const theme = useTheme();
@@ -16,7 +17,7 @@ export const CreateAquarium = ({navigation}) => {
 const [name, setName] = useState(null)
 const [type, setType] = useState(null)
 const [capacity, setCapacity] = useState(null)
-const [date, setDate] = useState(null)
+const [date, setDate] = useState('')
   const [notificationsDate, setNotificationsDate] = useState([])
      const [listNotification, setListNotification] = useState([])
 
@@ -195,10 +196,26 @@ try {
 
         }, 0)
     }, []))
+const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+   const handleConfirm = (d) => {
+       
+   setDatePickerVisibility(false);
+    setDate(d.getDate() + '-' + d.getMonth() + '-' + d.getFullYear())
+   
+  };
 
     return (
         <View style={[styles.container, {marginTop: 50, paddingHorizontal: 10}]}>
-
+<DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+      />
 
         <View style={{  paddingHorizontal: 10, flexDirection: "row"}}>
        <TouchableOpacity style={{height: '100%', width: 50}} onPress={() => {navigation.goBack(); Keyboard.dismiss()}}>
@@ -234,10 +251,11 @@ try {
                     </View>
 
                     <Text style={{fontSize: 20, marginLeft: 10, color: "#009387"}}>Дата запуска</Text>
-                    <View style={[styles.inputWrapper]}>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
-                         onChangeText={text => setDate(text)} value={date} placeholderTextColor={'#666'}/>
-                    </View>
+                   
+                   
+                    <TouchableOpacity onPress={() => setDatePickerVisibility(d => !d)} style={[styles.inputWrapper,styles.textInput, {backgroundColor: colors.background2}]}>
+                     <Text style={{fontSize: 20, color: colors.text}}>{date}</Text>
+                     </TouchableOpacity>
 
 
 

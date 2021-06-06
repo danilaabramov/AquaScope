@@ -7,9 +7,23 @@ import * as Animatable from "react-native-animatable";
 import {Caption, Paragraph} from "react-native-paper";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import {FishClown} from "../components/FishClown";
+import {Petuh} from "../components/Petuh";
+import {Scalaria} from "../components/Scalaria";
 import {FishOrange} from "../components/FishOrange";
 import {FishOrange2} from "../components/FishOrange2";
+import {BigTail} from "../components/BigTail";
+import {Cumeta} from "../components/Cumeta";
+import {Teleskop} from "../components/Teleskop";
+import {Ternetsia} from "../components/Ternetsia";
+import {Barbus} from "../components/Barbus";
+import {Labeo} from "../components/Labeo";
 import {FishBlue} from "../components/FishBlue";
+import {Molinezia} from "../components/Molinezia";
+import {Gurami} from "../components/Gurami";
+import {Koridoras} from "../components/Koridoras";
+import {Petsilia} from "../components/Petsilia";
+import {Antsistrus} from "../components/Antsistrus";
+import {Danio} from "../components/Danio";
 import {ClownLoach} from "../components/ClownLoach";
 import {NanoFish} from "../components/NanoFish";
 import {SwordBill} from "../components/SwordBill";
@@ -134,7 +148,35 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
                             <AnimatedFish key={index}  height={razmer} raznica={raznica}><NanoFish/></AnimatedFish>
                             :  (item.ico === "SwordBill") ?
                             <AnimatedFish key={index}  height={razmer} raznica={raznica}><SwordBill/></AnimatedFish>
-                            : null
+                            :  (item.ico === "Petuh") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Petuh/></AnimatedFish>
+                            :  (item.ico === "Scalarias") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Scalaria/></AnimatedFish>
+                            :  (item.ico === "BigTail") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><BigTail/></AnimatedFish>
+                            :  (item.ico === "Barbus") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Barbus/></AnimatedFish>
+                            :  (item.ico === "Ternetsia") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Ternetsia/></AnimatedFish>
+                            :  (item.ico === "Danio") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Danio/></AnimatedFish>
+                             :  (item.ico === "Petsilia") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Petsilia/></AnimatedFish>
+                             :  (item.ico === "Antsistrus") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Antsistrus/></AnimatedFish>
+                             :  (item.ico === "Molinezia") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Molinezia/></AnimatedFish>
+                            :  (item.ico === "Koridoras") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Koridoras/></AnimatedFish>
+                            :  (item.ico === "Gurami") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Gurami/></AnimatedFish>
+                            :  (item.ico === "Cumeta") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Cumeta/></AnimatedFish>
+                            :  (item.ico === "Labeo") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Labeo/></AnimatedFish>
+                            :  (item.ico === "Teleskop") ?
+                            <AnimatedFish key={index}  height={razmer} raznica={raznica}><Teleskop/></AnimatedFish>
+                             : null
                     )} ) : null
                 }
             </View>
@@ -154,12 +196,12 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
                         <FontAwesome5 name="info" size={20}/></Text>
                 </TouchableOpacity>
             </View> : null }
-            <Animated.View  style={ {color: colors.text, textAlign: 'center',height: height}}/>
+            <Animated.View  style={ {color: colors.text, height: height}}/>
                { isAquarium ?   <Animatable.View animation="fadeInUpBig" style={[styles.footer, {
                     backgroundColor: colors.backgroundOpacity   }]} >
-                    <Text style={[styles.text_footer, {color: "white", borderBottomColor: colors.text,
-                        borderBottomWidth: 1, marginBottom: 10, paddingBottom: 10, textAlign: 'center'}]}
-                         onPress={() => {navigation.navigate("CreateAquarium")}}  >Информация об аквариуме</Text>
+                    <Text style={ {color: "white", borderBottomColor: colors.text,
+                        borderBottomWidth: 1, marginBottom: 10, paddingBottom: 10, textAlign: 'center', fontSize: 15}}
+                         onPress={() => {navigation.navigate("CreateAquarium")}}  >Информация об аквариуме <FontAwesome5 name="pencil-alt" size={15}/></Text>
                     <ScrollView>
                         <View style={styles.section}>
                             <Caption style={[styles.caption, {color: "#9B9B9B", width: 110, marginRight: 10}]}>Название</Caption>

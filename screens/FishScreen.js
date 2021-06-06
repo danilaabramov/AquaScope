@@ -1,13 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import {ActivityIndicator, Dimensions, View, Text, StyleSheet, Keyboard, ScrollView, Alert, Platform, KeyboardAvoidingView, TextInput, TouchableOpacity, StatusBar } from 'react-native';
 import { useTheme } from "@react-navigation/native";
+import {Petuh} from "../components/Petuh"
 import {FishClown} from "../components/FishClown"
 import {FishOrange2} from "../components/FishOrange2";;
 import {FishOrange} from "../components/FishOrange";
+import {Scalaria} from "../components/Scalaria";
 import {FishBlue} from "../components/FishBlue";
+import {Petsilia} from "../components/Petsilia";
+import {Antsistrus} from "../components/Antsistrus";
+import {Cumeta} from "../components/Cumeta";
+import {Molinezia} from "../components/Molinezia";
 import {ClownLoach} from "../components/ClownLoach";
+import {Ternetsia} from "../components/Ternetsia";
+import {Labeo} from "../components/Labeo";
+import {Teleskop} from "../components/Teleskop";
+import {Gurami} from "../components/Gurami";
+import {BigTail} from "../components/BigTail";
 import {NanoFish} from "../components/NanoFish";
+import {Koridoras} from "../components/Koridoras";
 import {SwordBill} from "../components/SwordBill";
+import {Danio} from "../components/Danio";
+import {Barbus} from "../components/Barbus";
 import * as Animatable from "react-native-animatable";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Caption, Paragraph} from "react-native-paper";
@@ -163,8 +177,6 @@ try {
     }, [])
 
     const handleAddFish = async () => {
-
-
             let time = 0
             let capacity = 0
             try {
@@ -368,29 +380,36 @@ try {
                                                             :  item.ico === "ClownLoach" ? <ClownLoach/>
                                                             :  item.ico === "NanoFish" ? <NanoFish/>
                                                             :  item.ico === "SwordBill" ? <SwordBill/>
+                                                            :  item.ico === "Petuh" ? <Petuh/>
+                                                            :  item.ico === "Scalaria" ? <Scalaria/>
+                                                            :  item.ico === "BigTail" ? <BigTail/>
+                                                            :  item.ico === "Barbus" ? <Barbus/>
+                                                            :  item.ico === "Ternetsia" ? <Ternetsia/>
+                                                            :  item.ico === "Danio" ? <Ternetsia/>
+                                                            :  item.ico === "Petsilia" ? <Petsilia/>
+                                                            :  item.ico === "Antsistrus" ? <Antsistrus/>
+                                                            :  item.ico === "Molinezia" ? <Molinezia/>
+                                                            :  item.ico === "Koridoras" ? <Koridoras/>
+                                                            :  item.ico === "Gurami" ? <Gurami/>
+                                                            :  item.ico === "Cumeta" ? <Cumeta/>
+                                                            :  item.ico === "Labeo" ? <Labeo/>
+                                                            :  item.ico === "Teleskop" ? <Teleskop/>
                                                             : null
                                                     }
                                                     </View>
                                                     <View>
                                                     {
                                                         item.name === '' || item.name === null ? null :
-                                                        <Paragraph style={[styles.paragraph, styles.caption, {color: colors.text}]}>
+                                                        <Paragraph style={[styles.paragraph, styles.caption, {color: colors.text, marginLeft: 10}]}>
                                                         {item.name}</Paragraph>
                                                     }
                                                     {
                                                         item.title === '' || item.title === null ? null :
                                                         <Caption style={[styles.caption, {color: theme.dark ?  "rgba(255,255,255, 0.5)"
-                                                        : "rgba(0,0,0, 0.5)"}]}>{item.title}</Caption>
+                                                        : "rgba(0,0,0, 0.5)", marginLeft: 10}]}>{item.title}</Caption>
                                                     }
                                                     </View>
                                                 </View>
-                                                {/*
-                                                    item.quantity === '' || item.quantity === null ?
-                                                    <Paragraph style={[styles.paragraph, styles.caption, {color: colors.text}]}>
-                                                    {" x1"}</Paragraph>
-                                                    : <Paragraph style={[styles.paragraph, styles.caption,
-                                                    {color: colors.text}]}>{" x" + item.quantity}</Paragraph>
-                                               */ }
                                                 <TouchableOpacity onPress={() => openDeleteAlert(index)}>
                                                     <MaterialCommunityIcons name="close" size={26} color={colors.text}/>
                                                 </TouchableOpacity>
@@ -478,9 +497,9 @@ try {
                 }
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginTop: 10, flexDirection: 'row'}}>
-                                <TouchableOpacity onPress={() => {setIcon("FishClown"); Keyboard.dismiss()}} 
-                                    style={[styles.textInput, {backgroundColor: icon === "FishClown" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0, margin: 5}]}>
-                                    <FishClown/>
+                                <TouchableOpacity onPress={() => {setIcon("Teleskop"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Teleskop" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Teleskop/>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {setIcon("FishOrange"); Keyboard.dismiss()}} 
                                     style={[styles.textInput, {backgroundColor: icon === "FishOrange" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0, margin: 5}]}>
@@ -507,6 +526,70 @@ try {
                                 <TouchableOpacity onPress={() => {setIcon("SwordBill"); Keyboard.dismiss()}} 
                                     style={[styles.textInput, {backgroundColor: icon === "SwordBill" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
                                     <SwordBill/>
+                                </TouchableOpacity>
+                                 <TouchableOpacity onPress={() => {setIcon("Petuh"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Petuh" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Petuh/>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{marginTop: 10, flexDirection: 'row'}}>
+                                <TouchableOpacity onPress={() => {setIcon("Scalaria"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Scalaria" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Scalaria/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {setIcon("BigTail"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "BigTail" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <BigTail/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {setIcon("Barbus"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Barbus" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Barbus/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {setIcon("Ternetsia"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Ternetsia" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Ternetsia/>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{marginTop: 10, flexDirection: 'row'}}>
+                                <TouchableOpacity onPress={() => {setIcon("Danio"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Danio" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Danio/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {setIcon("Petsilia"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Petsilia" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Petsilia/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {setIcon("Antsistrus"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Antsistrus" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Antsistrus/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {setIcon("Molinezia"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Molinezia" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Molinezia/>
+                                </TouchableOpacity>
+                            </View>
+                             <View style={{marginTop: 10, flexDirection: 'row'}}>
+                                <TouchableOpacity onPress={() => {setIcon("Koridoras"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Koridoras" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Koridoras/>
+                                </TouchableOpacity>
+                               <TouchableOpacity onPress={() => {setIcon("Gurami"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Gurami" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Gurami/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {setIcon("Cumeta"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Cumeta" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Cumeta/>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {setIcon("Labeo"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "Labeo" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0,  margin: 5}]}>
+                                    <Labeo/>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{marginTop: 10, flexDirection: 'row'}}>
+                                <TouchableOpacity onPress={() => {setIcon("FishClown"); Keyboard.dismiss()}} 
+                                    style={[styles.textInput, {backgroundColor: icon === "FishClown" ? '#25B0F3': colors.background2, color: colors.text, width: 60, height: 60, padding: 10, paddingTop: -10, paddingLeft: 0, margin: 5}]}>
+                                    <FishClown/>
                                 </TouchableOpacity>
                             </View>
                         </View>

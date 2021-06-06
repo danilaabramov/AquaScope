@@ -19,7 +19,7 @@ export const FishManual = ({ navigation, route }) => {
     const {colors} = useTheme();
     const theme = useTheme();
 
-
+const [isLoading, setIsLoading] = useState(false)
 
     const [listData, setListData] = useState(
         Manual.sort(function (a, b) {
@@ -34,6 +34,16 @@ export const FishManual = ({ navigation, route }) => {
             })),
     );
 
+
+    useFocusEffect(useCallback (() => {
+     
+
+  setTimeout(() => {   setIsLoading(false)
+  setIsLoading(l => !l)
+}, 0)
+        
+    }, [useIsFocused]))
+
     return (
              <Animatable.View //animation="lightSpeedIn"
              style={[styles.modelContentWrapper, {backgroundColor: colors.background}]}>
@@ -46,7 +56,7 @@ export const FishManual = ({ navigation, route }) => {
                     <Text style={[styles.sectionTitle, {color: colors.text}]}>{listData[route.params.id].title}</Text></View>
 
 {
-    useIsFocused ?
+    isLoading ?
 
   <ScrollView showsVerticalScrollIndicator={false} contentOffset={{x: 0, y: 0}}>
 

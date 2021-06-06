@@ -58,7 +58,7 @@ import AsyncStorage from "@react-native-community/async-storage";
     const min = Math.floor((sec % 3600) /60)
     const secs =this.state.sec % 60;
     return(
-      <Text style = {{color: this.props.color}}>{days} д : {hour} ч : {min} м: {secs} с</Text>
+      <Text style = {{color: this.props.color, fontSize: 25, textAlign: 'center', fontWeight: 'bold'}}>{days} д : {hour} ч : {min} м: {secs} с</Text>
     )
   }
   }

@@ -8,9 +8,9 @@ import LottieView from 'lottie-react-native'
 export const NoteScreen = ({navigation}) => {
     const {colors} = useTheme();
     const theme = useTheme();
-
     const [task, setTask] = useState();
     const [taskItems, setTaskItems] = useState([]);
+    const [active, setActive] = useState([]);
 
     const handleAddTask = async () => {
         Keyboard.dismiss();
@@ -19,17 +19,31 @@ export const NoteScreen = ({navigation}) => {
         setTask(null);
     }
 
-    const completeTask = async (index) => {
+    const canselTask = async (index) => {
         let itemsCopy = [...taskItems];
         itemsCopy.splice(index, 1);
         setTaskItems(itemsCopy)
         await AsyncStorage.setItem('Tasks', JSON.stringify(itemsCopy))
     }
 
+    const completeTask = async (index) => {
+        let itemsCopy = [...active];
+        itemsCopy[index] = !itemsCopy[index]
+        setActive([...itemsCopy])
+        await AsyncStorage.setItem('activeTasks', JSON.stringify(itemsCopy))
+    }
+
     useMemo(async () => {
         try {
             const myArray = await AsyncStorage.getItem('Tasks');
             setTaskItems([...JSON.parse(myArray)]);
+        } catch (e) {
+            console.log(e)
+        }
+
+        try {
+            const myArray = await AsyncStorage.getItem('activeTasks');
+            setActive([...JSON.parse(myArray)]);
         } catch (e) {
             console.log(e)
         }
@@ -49,13 +63,20 @@ export const NoteScreen = ({navigation}) => {
                         {
                             taskItems.map((item, index) => {
                                     return (
-                                        <TouchableOpacity key={index}  onPress={() => {}}>
+                                        <TouchableOpacity key={index}  onPress={() => {completeTask(index)}}>
                                             <View style={[styles.item, {backgroundColor: colors.background2}]}>
                                                 <View style={styles.itemLeft}>
-                                                    <View style={styles.square}/>
-                                                    <Text style={[styles.itemText, {color: colors.text}]}>{item}</Text>
+
+                                            <View style={[styles.square, {backgroundColor: theme.dark ? '#305970' : '#B9E3F8'}]}>
+                                {         active[index]  ?
+                                             <MaterialCommunityIcons name="check-bold" size={30} color={colors.text} style={{position: 'absolute', bottom: 1, left: 2, opacity: 1}}/>
+                                          : null
+                                }           
+                                             </View>           
+                                                   
+                                                    <Text style={[styles.itemText, {color: colors.text, textDecorationLine: active[index] ? 'line-through' : 'none'}]}>{item}</Text>
                                                 </View>
-                                                <TouchableOpacity onPress={() => completeTask(index)}>
+                                                <TouchableOpacity onPress={() => canselTask(index)}>
                                                     <MaterialCommunityIcons name="close" size={26} color={colors.text}/>
                                                 </TouchableOpacity>
                                             </View>
@@ -140,13 +161,12 @@ const styles = StyleSheet.create({
     square: {
         width: 24,
         height: 24,
-        backgroundColor: '#55BCF6',
-        opacity: 0.4,
         borderRadius: 5,
         marginRight: 15,
     },
     itemText: {
         maxWidth: '80%',
+        fontSize: 18
     },
     circular: {
         width: 12,

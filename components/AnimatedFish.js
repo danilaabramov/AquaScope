@@ -27,107 +27,107 @@ export const AnimatedFish = ({height, raznica, children}) => {
         },
         {
             x: height/12,
-            y: height/2.34+ 40
+            y: height/2.34
         },
         {
             x: height/11 ,
-            y: height/2.5+ 40
+            y: height/2.5
         },
         {
             x: height/10.5,
-            y: height/2.57+ 40
+            y: height/2.57
         },
         {
             x: height/10,
-            y: height/2.65+ 40
+            y: height/2.65
         },
         {
             x: height/9.5 ,
-            y: height/2.75+ 40
+            y: height/2.75
         },
         {
             x: height/9 ,
-            y: height/2.84 + 40
+            y: height/2.84
         },
         {
             x: height/8.5 ,
-            y: height/2.95 + 40
+            y: height/2.95
         },
         {
             x: height/8,
-            y: height/3.09  + 40
+            y: height/3.09
         },
         {
             x: height/7.5,
-            y: height/3.24  + 40
+            y: height/3.24
         },
         {
             x: height/7,
-            y: height/3.4  + 40
+            y: height/3.4 
         },
         {
             x: height/6.5,
-            y: height/3.64  + 40
+            y: height/3.64
         },
         {
             x: height/6,
-            y: height/3.85 + 40
+            y: height/3.85
         },
         {
             x: height/5.5,
-            y: height/4.15 + 40
+            y: height/4.15
         },
         {
             x: height/5,
-            y: height/4.55  + 40
+            y: height/4.55
         },
         {
             x: height/4.5,
-            y: height/5+ 40
+            y: height/5
         },
         {
             x: height/4 ,
-            y: height/5.6+ 40
+            y: height/5.6
         },
         {
             x: height/3.5  ,
-            y: height/6.45+ 40
+            y: height/6.45
         },
         {
             x: height/3 ,
-            y: height/7.55+ 40
+            y: height/7.55
         },
         {
             x: height/2.5,
-            y: height/9 + 40
+            y: height/9
         },
         {
             x: height/2.25 ,
-            y: height/8.9+ 40
+            y: height/8.9
         },
         {
             x: height/2 ,
-            y: height/7.65+ 40
+            y: height/7.65
         },
         {
             x: height/1.9,
-            y: height/7.01 + 40
+            y: height/7.01
         },
         {
             x: height/1.8,
-            y: height/6.25 + 40
+            y: height/6.25
         },
         {
             x: height/1.7,
-            y: height/5.46 + 40
+            y: height/5.46
         },
         {
             x: height/1.6,
-            y: height/4.62 + 40
+            y: height/4.62
         },
         {
             x: height/1.5,
-            y: height/3.82 + 40
+            y: height/3.82
         },
         {
             x: height/1.4,
@@ -159,6 +159,8 @@ export const AnimatedFish = ({height, raznica, children}) => {
     const startAnimate = () => {
         let time = getRandomFloat(5000,8000)
         let sdvigX2 =  getRandomFloat( height / 14.5,  height / 1.31) + screenWidth / 2 - height /2
+        if(sdvigX2 < screenWidth / 2 - 30) sdvigX2 += 30
+        else sdvigX2 -= 30
         let sdvigY2
         let flag = 1
         let prev;
@@ -168,12 +170,12 @@ export const AnimatedFish = ({height, raznica, children}) => {
                 flag = 0
             }
             else if(item.x > sdvigX && flag == 1 && index != 0) {
-                sdvigY2 = (item.y + prev.y) / 2
+                sdvigY2 = item.y > prev.y ? item.y : prev.y
                 flag = 0
             }
             prev = item
         })
-        sdvigY2 = getRandomFloat(sdvigY2 , height / 2) + raznica
+        sdvigY2 = getRandomFloat(sdvigY2 + 30, height / 2) + raznica
         if(sdvigX2 > sdvigX)
         {
             Animated.timing(
@@ -220,7 +222,10 @@ export const AnimatedFish = ({height, raznica, children}) => {
         return pos[0];
     };
 
-    function getRandomFloat(min, max) {
+    function getRandomFloat(m1, m2) {
+        let min
+        let max
+        if(m1 < m2) {min = m1; max = m2} else {min = m2; max = m1} 
         let ran = 0
         ran = Math.random()
         return ran * (max - min) + min;

@@ -24,6 +24,14 @@ import { RootStackScreen }from './screens/RootStackScreen';
 import { CreateAquarium }from './screens/CreateAquarium';
 import { FishManual }from './screens/FishManual';
 
+import { CaCO3 }from './calculators/CaCO3';
+import { ConvertLength }from './calculators/ConvertLength';
+import { ConvertTemperature }from './calculators/ConvertTemperature';
+import { ConvertWeight }from './calculators/ConvertWeight';
+import { K2CO3 }from './calculators/K2CO3';
+import { K2SO4 }from './calculators/K2SO4';
+import { KHCO3 }from './calculators/KHCO3';
+
 import { AquariumVolume }from './calculators/AquariumVolume';
 import { CO2Level }from './calculators/CO2Level';
 import { AquariumWater }from './calculators/AquariumWater';
@@ -236,6 +244,14 @@ const App = () => {
                                 <Drawer.Screen name="ConvertWaterVolume" component={ConvertWaterVolume} />
                                 <Drawer.Screen name="KNO3" component={KNO3} />
                                 <Drawer.Screen name="MixerRO" component={MixerRO} />
+
+                                <Drawer.Screen name="CaCO3" component={CaCO3} />
+                                <Drawer.Screen name="ConvertLength" component={ConvertLength} />
+                                <Drawer.Screen name="ConvertTemperature" component={ConvertTemperature} />
+                                <Drawer.Screen name="ConvertWeight" component={ConvertWeight} />
+                                <Drawer.Screen name="K2CO3" component={K2CO3} />
+                                <Drawer.Screen name="K2SO4" component={K2SO4} />
+                                <Drawer.Screen name="KHCO3" component={KHCO3} />
 
                                 <Drawer.Screen name="FishManual" component={FishManual}/>
                                  <Drawer.Screen name="CreateAquarium" component={CreateAquarium}/>
