@@ -6,7 +6,7 @@ import Notifications from '../model/Notifications';
 import {useTheme} from "@react-navigation/native";
 import PushNotification from "react-native-push-notification";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import {useIsFocused, useFocusEffect} from '@react-navigation/native'
+import {useFocusEffect} from '@react-navigation/native'
 import {ClockOfFood} from "./Timers";
 import AsyncStorage from "@react-native-community/async-storage";
 import AnimatedHeader from 'react-native-animated-header';
@@ -130,7 +130,7 @@ const showNotification = (title, message, index) => {
         } catch (e) { console.log(e) }
   }
 
- useEffect( () => {
+  useFocusEffect(useCallback (() => {
     setTimeout(async() => {
 
 
@@ -236,7 +236,7 @@ setTimers([...times])
             }
         ])}
 }, 0)
-   }, [])
+}, []))
 
 
 

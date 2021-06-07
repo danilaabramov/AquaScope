@@ -459,7 +459,7 @@ try {
                         <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                          onChangeText={text => setName(text)} value={name} placeholderTextColor={'#666'}/>
                     </View>
-                    <Text style={{fontSize: 20, marginLeft: 10, color: "#009387", marginTop: 10}}>Научное название рыбки рыбки</Text>
+                    <Text style={{fontSize: 20, marginLeft: 10, color: "#009387", marginTop: 10}}>Научное название рыбки</Text>
                 { 
                     isTabVisible ? <View>
                         <View style={[styles.inputWrapper, styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}>
