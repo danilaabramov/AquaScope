@@ -24,6 +24,11 @@ export const NoteScreen = ({navigation}) => {
         itemsCopy.splice(index, 1);
         setTaskItems(itemsCopy)
         await AsyncStorage.setItem('Tasks', JSON.stringify(itemsCopy))
+
+        itemsCopy = [...active];
+        itemsCopy.splice(index, 1);
+        setTaskItems(itemsCopy)
+        await AsyncStorage.setItem('activeTasks', JSON.stringify(itemsCopy))
     }
 
     const completeTask = async (index) => {
