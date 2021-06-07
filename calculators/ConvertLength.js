@@ -22,7 +22,7 @@ export const ConvertLength = ({navigation}) => {
                 </TouchableOpacity>
                 <Text style={[styles.sectionTitle, {color: colors.text}]}>Конвертёр длины</Text>
             </View>
-            <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
+            <ScrollView   showsVerticalScrollIndicator={false} contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
 
 
                      <View>
@@ -31,7 +31,7 @@ export const ConvertLength = ({navigation}) => {
 
                      <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Длина (сантиметр)</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue1(text)} value={value1} placeholderTextColor={'#666'}/>
                     </View>
 
@@ -53,7 +53,7 @@ export const ConvertLength = ({navigation}) => {
 
                      <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Длина (миллиметр)</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue2(text)} value={value2} placeholderTextColor={'#666'}/>
                     </View>
 
@@ -77,7 +77,7 @@ export const ConvertLength = ({navigation}) => {
 
                      <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Длина (дюйм)</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue3(text)} value={value3} placeholderTextColor={'#666'}/>
                     </View>
 

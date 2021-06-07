@@ -161,21 +161,20 @@ export const AnimatedFish = ({height, raznica, children}) => {
         let sdvigX2 =  getRandomFloat( height / 14.5,  height / 1.31) + screenWidth / 2 - height /2
         if(sdvigX2 < screenWidth / 2 - 30) sdvigX2 += 30
         else sdvigX2 -= 30
-        let sdvigY2
         let flag = 1
         let prev;
         fun.map((item, index) => {
             if(item.x == sdvigX && flag == 1) {
-                sdvigY2 = item.y
+                sdvigY = item.y
                 flag = 0
             }
             else if(item.x > sdvigX && flag == 1 && index != 0) {
-                sdvigY2 = item.y > prev.y ? item.y : prev.y
+                sdvigY = item.y > prev.y ? item.y : prev.y
                 flag = 0
             }
             prev = item
         })
-        sdvigY2 = getRandomFloat(sdvigY2 + 30, height / 2) + raznica
+        sdvigY = getRandomFloat(sdvigY + 30, height / 2) + raznica
         if(sdvigX2 > sdvigX)
         {
             Animated.timing(
@@ -200,7 +199,6 @@ export const AnimatedFish = ({height, raznica, children}) => {
                 }
             ).start()
         }
-        sdvigY = sdvigY2
         sdvigX = sdvigX2
         Animated.timing(left, {
             toValue: sdvigX,

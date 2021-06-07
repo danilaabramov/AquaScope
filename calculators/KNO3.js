@@ -23,7 +23,7 @@ export const KNO3 = ({navigation}) => {
                 </TouchableOpacity>
                 <Text style={[styles.sectionTitle, {color: colors.text}]}>KNO3</Text>
             </View>
-            <ScrollView  showsVerticalScrollIndicator={false}>
+            <ScrollView    showsVerticalScrollIndicator={false} showsVerticalScrollIndicator={false}>
                 
                 <View>
                     

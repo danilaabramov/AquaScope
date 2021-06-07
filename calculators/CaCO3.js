@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Keyboard, View, Text, StyleSheet, Image, Dimensions, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import { useTheme } from "@react-navigation/native";
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const CaCO3 = ({navigation}) => {
     const screenWidth = Dimensions.get('screen').width;
@@ -21,23 +21,23 @@ export const CaCO3 = ({navigation}) => {
                 </TouchableOpacity>
                 <Text style={[styles.sectionTitle, {color: colors.text}]}>CaCO3</Text>
             </View>
-            <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
+            <ScrollView   showsVerticalScrollIndicator={false} contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
                 
                 <View>
                     
                 <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Объём аквариума (литров)</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue1(text)} value={value1} placeholderTextColor={'#666'}/>
                     </View>
                     <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Объём раствора (миллилитров)</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue2(text)} value={value2} placeholderTextColor={'#666'}/>
                     </View>
                     <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Количество сухой соли (граммов)</Text>
-                        <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue3(text)} value={value3} placeholderTextColor={'#666'}/>
                     </View>
 

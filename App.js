@@ -11,16 +11,14 @@ import {
     DefaultTheme as PaperDefaultTheme,
     DarkTheme as PaperDarkTheme
 } from 'react-native-paper';
-import LottieView from 'lottie-react-native'
+
 import { DrawerContent } from './screens/DrawerContent';
 import{ MainTabScreen }from './screens/MainTabScreen';
-import{ SupportScreen }from './screens/SupportScreen';
-import{ SettingsScreen }from './screens/SettingsScreen';
 import {NoteScreen} from './screens/NoteScreen';
 import {FishScreen} from './screens/FishScreen';
 import {HomeScreen} from './screens/HomeScreen';
 import { AuthContext } from './components/context';
-import { RootStackScreen }from './screens/RootStackScreen';
+
 import { CreateAquarium }from './screens/CreateAquarium';
 import { FishManual }from './screens/FishManual';
 
@@ -41,7 +39,6 @@ import {MixerRO}from './calculators/MixerRO';
 import {KNO3}from './calculators/KNO3';
 
 import AsyncStorage from '@react-native-community/async-storage';
-import ProfileScreen from "./screens/ProfileScreen";
 import Users from "./model/users";
 import { useTheme } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native'
@@ -51,12 +48,6 @@ const Drawer = createDrawerNavigator();
 const App = () => {
   const { colors } = useTheme();
     const [isDarkTheme, setIsDarkTheme] = React.useState(Appearance.getColorScheme() === "dark")
-
-    const initialLoginState = {
-        isLoading: true,
-        userName: null, 
-        userToken: null,
-    };
 
     const CustomDefaultTheme = {
         ...NavigationDefaultTheme,
@@ -86,154 +77,23 @@ const App = () => {
 
     let theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;
 
-    const loginReducer = (prevState, action) => {
-        switch( action.type ) {
-            case 'RETRIEVE_TOKEN':
-                return {
-                    ...prevState,
-                    userToken: action.token,
-                    isLoading: false,
-                };
-            case 'LOGIN':
-                return {
-                    ...prevState,
-                    userName: action.id,
-                    userToken: action.token,
-                    isLoading: false,
-                };
-            case 'LOGOUT':
-                return {
-                    ...prevState,
-                    userName: null,
-                    userToken: null,
-                    isLoading: false,
-                };
-            case 'REGISTER':
-                return {
-                    ...prevState,
-                    userName: action.id,
-                    userToken: action.token,
-                    isLoading: false,
-                };
-        }
-    };
-
-    const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
-
+ 
     const authContext = React.useMemo(() => ({
-
-        signIn: async(foundUser) => {
-            const userToken = String(foundUser[0].userToken);
-            const userName = foundUser[0].username;
-            try {
-                await AsyncStorage.setItem('userToken', userToken);
-            } catch(e) {
-                console.log(e);
-            }
-            dispatch({ type: 'LOGIN', id: userName, token: userToken });
-        },
-        signOut: async() => {
-            try {
-                await AsyncStorage.removeItem('userToken');
-            } catch(e) {
-                console.log(e);
-            }
-            dispatch({ type: 'LOGOUT' });
-        },
-        signUp: () => {
-
-        },
         toggleTheme: () => {
             setIsDarkTheme(Appearance.getColorScheme() === "dark")
         }
     }), []);
 
     useEffect(() => {
-      
-        setTimeout(async() => {
-            let userToken = null;
-            try {
-                userToken = await AsyncStorage.getItem('userToken');
-            } catch(e) {
-                console.log(e);
-            }
-            console.log('user token: ', userToken);
-            dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
-        }, 0);
-    }, []);
-
-
-    useEffect(() => {
         setInterval(() =>{authContext.toggleTheme()}, 1)
     }, [])
 
-  PushNotification.configure({
-    onRegister: function (token) {
-      console.log("TOKEN:", token);
-    },
-    onNotification: function (notification) {
-      console.log("NOTIFICATION:", notification);
-      notification.finish(PushNotificationIOS.FetchResult.NoData);
-    },
-    onAction: function (notification) {
-      console.log("ACTION:", notification.action);
-      console.log("NOTIFICATION:", notification);
-    },
-    onRegistrationError: function(err) {
-      console.error(err.message, err);
-    },
-    permissions: {
-      alert: true,
-      badge: true,
-      sound: true,
-    },
-    popInitialNotification: true,
-    requestPermissions: true,
-  });
-
-  const showNotification = (title, message) => {
-    PushNotification.createChannel(
-      {
-        channelId: "com.aquascope",
-        channelName: "com.aquascope",
-        channelDescription: "A chanel to categorise your notifications",
-        playSound: false,
-        soundName: "default",
-        importance: 4,
-        vibrate: true,
-      }
-    )
-
-    PushNotification.localNotification({
-      channelId: "com.aquascope",
-      title: title,
-      message: message, 
-      vibrate: true,
-      vibration: 300,
-      soundName: "default",
-    })
-  }
-
-  if( loginState.isLoading ) {
-        return(
-            <View style={{flex:1, justifyContent:'center',alignItems:'center', backgroundColor: "white"}}>
-              <ActivityIndicator size="large"/>
-                 <LottieView source={require('./components/6729-fish.json')} autoPlay loop/>
-            </View>
-        );
-    }
-
     return (
         <PaperProvider theme={theme}>
-            <AuthContext.Provider value={authContext}>
                 <NavigationContainer theme={theme}>
-                    { loginState.userToken === null ?
                             <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
                               <Drawer.Screen name="FishScreen" component={FishScreen} />
                                 <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
-                                <Drawer.Screen name="Profile" component={ProfileScreen} />
-                                <Drawer.Screen name="SupportScreen" component={SupportScreen} />
-                                <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
                                 <Drawer.Screen name="NoteScreen" component={NoteScreen} />
 
 
@@ -256,10 +116,7 @@ const App = () => {
                                 <Drawer.Screen name="FishManual" component={FishManual}/>
                                  <Drawer.Screen name="CreateAquarium" component={CreateAquarium}/>
                             </Drawer.Navigator>
-                        : <RootStackScreen/>
-                    }
                 </NavigationContainer>
-            </AuthContext.Provider>
         </PaperProvider>
     )
 }

@@ -28,12 +28,12 @@ export const WaterBalance = ({navigation}) => {
                     <View style={{flexDirection: 'row'}}>
                         <View style={{justifyContent: 'flex-start', width: '49%', marginRight: '2%'}}>
                             <Text style={{color: '#72D695', marginLeft: 10}}>RO вода (литров){"\n"}</Text>
-                                <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                                <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                                 placeholder="" onChangeText={text => setValue1(text)} value={value1} placeholderTextColor={'#666'} />
                         </View>
                         <View style={{justifyContent: 'flex-end', width: '49%'}}>
                             <Text style={{color: '#72D695', marginLeft: 10}}>Водопроводная вода</Text>
-                            <TextInput style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                            <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                             placeholder="" onChangeText={text => setValue2(text)} value={value2} placeholderTextColor={'#666'}/>
                         </View>
                     </View>  
@@ -52,18 +52,18 @@ export const WaterBalance = ({navigation}) => {
                     
                     <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Объём воды RO (литров)</Text>
-                        <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                        <TextInput keyboardType='numeric' keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                         placeholder="" onChangeText={text => setValue3(text)} value={value3} placeholderTextColor={'#666'}/>
                     </View>
                     <View style={{flexDirection: 'row'}}>
                         <View style={{justifyContent: 'flex-start', width: '49%', marginRight: '2%', marginTop: 20}}>
                             <Text style={{color: '#72D695', marginLeft: 10}}>Соотношение воды{"\n"}</Text>
-                            <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                            <TextInput keyboardType='numeric' keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                             placeholder="" onChangeText={text => setValue4(text)} value={value4} placeholderTextColor={'#666'}/>
                         </View>
                         <View style={{justifyContent: 'flex-end', width: '49%', marginTop: 20}}>
                             <Text style={{color: '#72D695', marginLeft: 10}}>Объём  воды(литров) </Text>
-                            <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+                            <TextInput keyboardType='numeric' keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
                             placeholder="" onChangeText={text => setValue5(text)} value={value5} placeholderTextColor={'#666'}/>
                         </View>
                     </View>  

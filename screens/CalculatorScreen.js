@@ -101,6 +101,18 @@ export const CalculatorScreen = ({navigation}) => {
                                           <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>KHCO3</Paragraph>
                                         </TouchableOpacity>
 
+                                        <TouchableOpacity onPress={() => {navigation.navigate("KHCO3")}} style={{width: '100%'}}
+                                           activeOpacity={0.5}  >
+                                           
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>KHCO3</Paragraph>
+                                        </TouchableOpacity>
+
+                                        <TouchableOpacity onPress={() => {navigation.navigate("K2CO3")}} style={{width: '100%'}}
+                                           activeOpacity={0.5}  >
+                                           
+                                          <Paragraph  style={[{color: colors.text, borderBottomWidth: 1, borderBottomColor: theme.dark ? '#2E2E2E' : '#F2F2F2', fontSize: 20, padding: 25}]}>K2CO3</Paragraph>
+                                        </TouchableOpacity>
+
                                          <TouchableOpacity onPress={() => {navigation.navigate("CaCO3")}} style={{width: '100%'}}
                                            activeOpacity={0.5}  >
                                            

@@ -6,12 +6,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from  'react-native-vector-icons/Ionicons'
 import SimpleLineIcons from  'react-native-vector-icons/SimpleLineIcons'
 import Feather from  'react-native-vector-icons/Feather'
-import {AuthContext} from "../components/context";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export const DrawerContent = (props) => {
     const paperTheme = useTheme();
-    const { signOut, toggleTheme } = React.useContext(AuthContext)
     return (
         <View style={{flex: 1}}>
 
@@ -21,12 +19,8 @@ export const DrawerContent = (props) => {
 
                        <Drawer.Section style={styles.drawerSection}>
                            <DrawerItem icon={({color, size}) => (
-                              /* <Icon name="home-outline" color={color} size={size}/>*/
                                <MaterialCommunityIcons name="fishbowl-outline" color={color} size={size} />
                            )} label="Аквариум" onPress={() => {props.navigation.navigate('Home')}}/>
-
-
-
                            <DrawerItem icon={({color, size}) => (
                                <Ionicons name="notifications-outline" color={color} size={size}/>
                            )} label="Оповещения" onPress={() => {props.navigation.navigate('Notifications')}}/>
@@ -36,44 +30,13 @@ export const DrawerContent = (props) => {
                            <DrawerItem icon={({color, size}) => (
                                <Feather name="book" color={color} size={size}/>
                            )} label="Мануал" onPress={() => {props.navigation.navigate('Manual')}}/>
-
-
                            <DrawerItem icon={({color, size}) => (
                                <Icon name="note-multiple-outline" color={color} size={size}/>
                            )} label="Заметки" onPress={() => {props.navigation.navigate('NoteScreen')}}/>
-
-                           
-                  {/*         <DrawerItem icon={({color, size}) => (
-                               <Ionicons name="settings-outline" color={color} size={size}/>
-                           )} label="Настройки" onPress={() => {props.navigation.navigate('SettingsScreen')}}/>
-
-                           <DrawerItem icon={({color, size}) => (
-                               <Icon name="account-check-outline" color={color} size={size}/>
-                           )} label="Support" onPress={() => {props.navigation.navigate('SupportScreen')}}/>
-                           */}
                        </Drawer.Section>
-                    { /*  <Drawer.Section>
-                           <TouchableRipple onPress={() => {
-                               toggleTheme();
-                               props.navigation.navigate('Home')
-                           }}>
-                               <View style={styles.preference}>
-                                   <Caption style={{fontSize: 16}}>Тема</Caption>
-                                   <View pointerEvents="none">
-                                       <Switch value={paperTheme.dark}/>
-                                   </View>
-
-                               </View>
-                           </TouchableRipple>
-                       </Drawer.Section>*/}
                    </View>
                </View>
            </DrawerContentScrollView>
-           {/* <Drawer.Section style={styles.bottomDrawerSection}>
-                <DrawerItem icon={({color, size}) => (
-                    <Icon name="exit-to-app" color={color} size={size}/>
-                )} label="Sign Out" onPress={() => {signOut()}}/>
-            </Drawer.Section>*/}
         </View>
     )
 }
