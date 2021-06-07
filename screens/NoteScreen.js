@@ -17,6 +17,9 @@ export const NoteScreen = ({navigation}) => {
         await AsyncStorage.setItem('Tasks', JSON.stringify([...taskItems, task]))
         setTaskItems([...taskItems, task])
         setTask(null);
+
+        await AsyncStorage.setItem('activeTasks', JSON.stringify([...active, false]))
+        setTaskItems([...active, false])
     }
 
     const canselTask = async (index) => {
