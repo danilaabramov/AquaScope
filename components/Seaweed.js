@@ -1,3 +1,7 @@
+/**
+*В данной папке находится код функций работы с анимацией рыбок и импортом svg компонентов
+*Работа с svg компонентом Seaweed
+*/
 import * as React from "react"
 import Svg, { G, Path } from "react-native-svg"
 

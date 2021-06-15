@@ -1,20 +1,32 @@
+/**
+*В данной папке находится код функций калькуляторов.
+*Конвертер температуры (градусы Цельсия, Кельвина, Фаренгейта)
+*/
+
+//Импорт элементов из библиотек
 import React, {useState} from 'react';
 import {Keyboard, View, Text, StyleSheet, Image, Dimensions, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import { useTheme } from "@react-navigation/native";
 import {Caption, Paragraph} from "react-native-paper";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+
 export const ConvertTemperature = ({navigation}) => {
+    
+    //размеры окна
     const screenWidth = Dimensions.get('screen').width;
     const screenHeight = Dimensions.get('screen').height;
+    
+    //цветовая схема окна
     const {colors} = useTheme();
     const theme = useTheme();
-    const [value1, setValue1] = useState(null)
-    const [value2, setValue2] = useState(null)
-    const [value3, setValue3] = useState(null)
+    
+    const [tempC, setTempC] = useState(null)//температура (С)
+    const [tempK, setTempK] = useState(null)//температура (К)
+    const [tempF, setTempF] = useState(null)//температура (Ф)
    
 
-    return (
+    return (//рендер компонентов
         <View style={styles.container}>
             <View style={{marginTop: 5, paddingBottom: 10, flexDirection: "row"}}>
                 <TouchableOpacity style={{height: '100%', width: 50, }} onPress={() => {navigation.goBack(); Keyboard.dismiss()}}>
@@ -26,26 +38,22 @@ export const ConvertTemperature = ({navigation}) => {
 
 
                      <View>
-
-
-
                      <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Температура (Цельсия)</Text>
                         <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
-                        placeholder="" onChangeText={text => setValue1(text)} value={value1} placeholderTextColor={'#666'}/>
+                        
+                        //инициализация переменной tempC значением, введённым пользователем
+                        placeholder="" onChangeText={text => setTempC(text)} value={tempC} placeholderTextColor={'#666'}/>
                     </View>
 
-
+                    {/*перевод из градусов цельсия в градусы фарингейта и кельвина*/}
                     <View style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text, marginTop: 15, padding: 15}]}>
                     <Text style={{color: '#72D695', fontWeight: 'bold', marginBottom: 10}}>Результат:</Text>
-                    <Text style={{color: colors.text}}> {(value1 * 9/5+32)} фаренгейт </Text>
-                    <Text style={{color: colors.text}}> {(value1 -(-273.15))} кельвин </Text>
+                    <Text style={{color: colors.text}}> {(tempC * 9/5+32)} фаренгейт </Text>
+                    <Text style={{color: colors.text}}> {(tempC -(-273.15))} кельвин </Text>
                    
                     </View>
-
-                    
                     </View>
-
 
                     <View>
 
@@ -54,65 +62,45 @@ export const ConvertTemperature = ({navigation}) => {
                      <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Температура (Фаренгейт)</Text>
                         <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
-                        placeholder="" onChangeText={text => setValue2(text)} value={value2} placeholderTextColor={'#666'}/>
+                        
+                        //инициализация переменной tempF значением, введённым пользователем
+                        placeholder="" onChangeText={text => setTempF(text)} value={tempF} placeholderTextColor={'#666'}/>
                     </View>
 
-
+                    {/*перевод из градусов фаренгейта в градусы цельсия и кельвина*/}
                     <View style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text, marginTop: 15, padding: 15}]}>
                     <Text style={{color: '#72D695', fontWeight: 'bold', marginBottom: 10}}>Результат:</Text>
-                    <Text style={{color: colors.text}}> {((value2 -32)*5/9).toFixed([3])} цельсия </Text>
-                    <Text style={{color: colors.text}}> {((value2 -32)*5/9+273.15).toFixed([3])} кельвин </Text>
+                    <Text style={{color: colors.text}}> {((tempF -32)*5/9).toFixed([3])} цельсия </Text>
+                    <Text style={{color: colors.text}}> {((tempF -32)*5/9+273.15).toFixed([3])} кельвин </Text>
                    
                     </View>
 
-                    
                     </View>
-
-
-
-
                     <View>
-
-
-
                      <View>
                         <Text style={{color: '#72D695', marginLeft: 10, marginTop: 20}}>Температура (Кельвин)</Text>
                         <TextInput keyboardType='numeric' style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
-                        placeholder="" onChangeText={text => setValue3(text)} value={value3} placeholderTextColor={'#666'}/>
+                        
+                        //инициализация переменной tempK значением, введённым пользователем
+                        placeholder="" onChangeText={text => setTempK(text)} value={tempK} placeholderTextColor={'#666'}/>
                     </View>
 
-
+                    {/*перевод из градусов кельвина в градусы цельсия и фаренгейта*/}
                     <View style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text, marginTop: 15, padding: 15}]}>
                     <Text style={{color: '#72D695', fontWeight: 'bold', marginBottom: 10}}>Результат:</Text>
-                    <Text style={{color: colors.text}}> {(value3 -273.15)} цельсия </Text>
-                    <Text style={{color: colors.text}}> {((value3-273.15)*9/5+32).toFixed([3])} фаренгейт </Text>
+                    <Text style={{color: colors.text}}> {(tempK -273.15)} цельсия </Text>
+                    <Text style={{color: colors.text}}> {((tempK-273.15)*9/5+32).toFixed([3])} фаренгейт </Text>
                    
                     </View>
 
                     
                     </View>
-
-
-                   
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </ScrollView>
+                </ScrollView>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({//константа в которой содержится определение стилей контейнеров и их свойства
     container: {
         flex: 1,
         marginTop: 50,

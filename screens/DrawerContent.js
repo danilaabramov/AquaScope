@@ -1,3 +1,9 @@
+/**
+*В данной папке находится код окон приложения
+*Боковое меню 
+*/
+
+//Импорт элементов из библиотек
 import React from 'react'
 import {View, StyleSheet, StatusBar } from 'react-native'
 import { useTheme, Avatar, Title, Caption, Paragraph, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper'
@@ -9,14 +15,17 @@ import Feather from  'react-native-vector-icons/Feather'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export const DrawerContent = (props) => {
+
+    //цветовая схема окна
     const paperTheme = useTheme();
-    return (
+    
+    return (//рендер элемента
         <View style={{flex: 1}}>
 
            <DrawerContentScrollView {...props}>
                <View style={styles.drawerContent}>
                    <View style={styles.userInfoSection}>
-
+                        {/*При нажатии на лейблы переходит перемещение в соответствующее окно приложения */}
                        <Drawer.Section style={styles.drawerSection}>
                            <DrawerItem icon={({color, size}) => (
                                <MaterialCommunityIcons name="fishbowl-outline" color={color} size={size} />
@@ -41,7 +50,7 @@ export const DrawerContent = (props) => {
     )
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({//константа, в которой содержится определение стилей контейнеров и их свойства
     drawerContent: {
         flex: 1,
     },

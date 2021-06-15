@@ -1,3 +1,9 @@
+/**
+*В данной папке находится код окон приложения
+*Окно уведомлений
+*/
+
+//Импорт элементов из библиотек
 import React, {useState, useCallback, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Switch, Dimensions, Button, ScrollView} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,7 +19,7 @@ import AnimatedHeader from 'react-native-animated-header';
 
 export const NotificationsScreen = ({ navigation}) => {
 
-PushNotification.configure({
+PushNotification.configure({//настройка пуш-уведомлений, регистрация event-ов
     onRegister: function (token) {
       console.log("TOKEN:", token);
     },
@@ -38,41 +44,40 @@ PushNotification.configure({
 });
 
 
-const showNotificationShedule = (title, message, index, id, chanel, time) => {
-    PushNotification.createChannel(
+const showNotificationShedule = (title, message, index, id, chanel, time) => {//функция отображения пуш-уведомления
+  PushNotification.createChannel(//создание канала для передачи пуш-уведомления
       {
-        channelId: chanel,
-        channelName: chanel,
+        channelId: chanel,//id канала
+        channelName: chanel,//имя канала
         channelDescription: "A chanel to categorise your notifications",
-        playSound: false,
+        playSound: false,//звуковое оповещение при поступлении уведомления
         soundName: "default",
         importance: 4,
-        vibrate: true,
+        vibrate: true,//вибрация
          
       }
     )
 
-    PushNotification.localNotificationSchedule(
-       {
-           id: id,
-           channelId: chanel,
-           title: title,
-          message: message,
-          vibrate: true,
-          vibration: 300,
-          soundName: "default",
-          date: new Date(Date.now() + time * 1000) ,
-          allowWhileIdle: true,
-          repeatType: "time",
-          repeatTime: time * 1000,
-          groupSummary: true,
-          ignoreInForeground: true,
-        }
-    )
+    PushNotification.localNotificationSchedule(//генерация уведомления
+      {
+          id: id,
+          channelId: chanel,
+          title: title,//заглавие уведомления
+         message: message,//текст уведомления
+         vibrate: true,
+         vibration: 300,
+         soundName: "default",
+         date: new Date(Date.now() + 5000/* time * 1000*/) ,//время уведомления
+         allowWhileIdle: true,
+         repeatType: "time",
+         repeatTime: time * 1000,//время повторения уведомления
+         groupSummary: true
+       }
+   )
 }
 
 const showNotification = (title, message, index) => {
-    PushNotification.createChannel(
+    PushNotification.createChannel(//не используется в работе
       {
         channelId: "com.aquascope",
         channelName: "com.aquascope",
@@ -93,12 +98,19 @@ const showNotification = (title, message, index) => {
       soundName: "default",
     })
 }
+
   const [notificationsDate, setNotificationsDate] = useState([])
+
+  //цветовая схема устройства
   const { colors } = useTheme();
+
+  //размеры окна
   const screenWidth = Dimensions.get('screen').width;
   const screenHeight = Dimensions.get('screen').height;
-  const [listData, setListData] = useState([])
-  const [timers, setTimers] = useState([])
+
+  const [listData, setListData] = useState([])//массив даты и времени, в которое должен произойти вызов пуш-уведомления
+  const [timers, setTimers] = useState([])//массив таймеров для отсчёта времени генерации уведомлений
+  
   const toggleNotification = async(index) => {
    
         if(listData[index].active){
@@ -108,7 +120,7 @@ const showNotification = (title, message, index) => {
           let chanel = "com.aquascope" + listData[index].key
           showNotificationShedule("Оповещение", listData[index].title, index, listData[index].key, chanel, timers[index])
           let notif = notificationsDate
-          let d = new Date(Date.now())
+          let d = new Date(Date.now())//текущие дата и время
           notif[index] = {
             year: d.getFullYear(),
             month: d.getMonth(),
@@ -118,7 +130,7 @@ const showNotification = (title, message, index) => {
             sec: d.getSeconds()
           }
           try {
-            await AsyncStorage.setItem('notificationsDate', JSON.stringify([...notif]))
+            await AsyncStorage.setItem('notificationsDate', JSON.stringify([...notif]))//добавляем в локальную память новое уведомление
           } catch (e) { console.log(e) }
           setNotificationsDate([...notif])  
         }  
@@ -126,14 +138,14 @@ const showNotification = (title, message, index) => {
         data[index].active = !data[index].active
         setListData([...data])
         try {
-          await AsyncStorage.setItem('notifications', JSON.stringify([...data]))
+          await AsyncStorage.setItem('notifications', JSON.stringify([...data]))//добавляем в локальную память новую дату уведомления
         } catch (e) { console.log(e) }
   }
 
-  useFocusEffect(useCallback (() => {
+ useFocusEffect(useCallback (() => {
     setTimeout(async() => {
 
-
+//расчёт времени между вызовами уведомлений
       let times = []
 for (let index = 0; index < 3; ++index){
   let time = 60 * 60 * 12
@@ -176,7 +188,7 @@ for (let index = 0; index < 3; ++index){
 setTimers([...times])
 
       try {
-        setNotificationsDate([...JSON.parse(await AsyncStorage.getItem('notificationsDate'))])
+        setNotificationsDate([...JSON.parse(await AsyncStorage.getItem('notificationsDate'))])//получаем из локальной памяти дату вызова уведомления
       
     } catch (e) {
       console.log(e)
@@ -211,7 +223,7 @@ setTimers([...times])
 
       let data = []
     try {
-        data = [...JSON.parse(await AsyncStorage.getItem('notifications'))]
+        data = [...JSON.parse(await AsyncStorage.getItem('notifications'))]//получаем из локального хранилища информацию о дате вызова пуш-уведомления
         setListData([...data]);
 
          } catch (e) { console.log(e) 
@@ -236,12 +248,12 @@ setTimers([...times])
             }
         ])}
 }, 0)
-}, []))
+ }, []))
 
 
 
 
-    return (
+    return (//рендер компонентов
       <AnimatedHeader 
         style={{flex: 1, marginTop: 20, paddingHorizontal: 10}}
         title='Оповещения'
@@ -262,7 +274,7 @@ setTimers([...times])
       
      <ScrollView showsVerticalScrollIndicator={false}>
 
-           
+           {/*Для каждого типа уведомления формируется свой таймер и свой тип уведомления*/}
             {
                 listData.map((data, index) => {
                     return (
@@ -279,6 +291,7 @@ setTimers([...times])
                 <View style={{flexDirection: 'column'}}>
                 {
 <View style={{width: screenWidth - 40}}>
+  {/*Таймер уведомления*/}
 <ClockOfFood index={index} color={colors.text} data={listData} time={timers[index]} notif={notificationsDate}/>
 </View>
                 }

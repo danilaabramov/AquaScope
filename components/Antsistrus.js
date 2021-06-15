@@ -1,3 +1,7 @@
+/**
+*В данной папке находится код функций работы с анимацией рыбок и импортом svg компонентов
+*Работа с svg компонентом Antsistrus
+*/
 import * as React from "react"
 import Svg, { Path, Ellipse } from "react-native-svg"
 

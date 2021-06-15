@@ -1,3 +1,9 @@
+/**
+*В данной папке находится код окон приложения
+*Окно информации о рыбках в аквариуме
+*/
+
+//Импорт элементов из библиотек
 import React, {useState, useEffect} from 'react';
 import {ActivityIndicator, Dimensions, View, Text, StyleSheet, Keyboard, ScrollView, Alert, Platform, KeyboardAvoidingView, TextInput, TouchableOpacity, StatusBar } from 'react-native';
 import { useTheme } from "@react-navigation/native";
@@ -31,21 +37,28 @@ import fishList from '../model/Manual';
 import PushNotification from "react-native-push-notification";
 
 export const FishScreen = ({navigation}) => {
+    //цветовая схема окна
     const {colors} = useTheme();
     const theme = useTheme();
+
+    //размеры окна
     const screenWidth = Dimensions.get('screen').width;
     const screenHeight = Dimensions.get('screen').height;
-    const [name, setName] = useState(null)
+
+    
+    const [name, setName] = useState(null)//название аквариума
     const [title, setTitle] = useState(null)
     const [quantity, setQuantity] = useState(null)
     const [icon, setIcon] = useState("FishClown")
-    const [fishItems, setFishItems] = useState([]);
+    const [fishItems, setFishItems] = useState([]);//массив рыбок, помещённых в аквариум
     const[isLoading, setIsLoading] = useState(false)
-  const [notificationsDate, setNotificationsDate] = useState([])
+
+    //переменные для работы с уведомлениями
+     const [notificationsDate, setNotificationsDate] = useState([])
      const [listNotification, setListNotification] = useState([])
 
 
-PushNotification.configure({
+PushNotification.configure({//настройка пуш-уведомлений, регистрация event-ов
     onRegister: function (token) {
       console.log("TOKEN:", token);
     },
@@ -70,7 +83,7 @@ PushNotification.configure({
 });
 
     const showNotificationShedule = (title, message, index, id, chanel, time, time2) => {
-    PushNotification.createChannel(
+    PushNotification.createChannel(//создание канала для уведомлений
       {
         channelId: chanel,
         channelName: chanel,
@@ -83,7 +96,7 @@ PushNotification.configure({
       }
     )
 
-    PushNotification.localNotificationSchedule(
+    PushNotification.localNotificationSchedule(//генерация пуш-уведомления (см. CreateAquarium.js)
        {
            id: id,
            channelId: chanel,
@@ -96,8 +109,7 @@ PushNotification.configure({
           allowWhileIdle: true,
           repeatType: "time",
           repeatTime: time * 1000,
-          groupSummary: true,
-          ignoreInForeground: true,
+          groupSummary: true
         }
     )
 }
@@ -176,7 +188,7 @@ try {
         return () => cleanupFunction = true;
     }, [])
 
-    const handleAddFish = async () => {
+    const handleAddFish = async () => {//расчёт времени между запуском уведомлений
             let time = 0
             let capacity = 0
             try {
@@ -207,10 +219,6 @@ try {
                 showNotificationShedule("Оповещение", listNotification[1].title, 1, listNotification[1].key, chanel, time, seconds)
             }  
 
-    
-
-
-
         let data = {
             key: fishItems.length.toString(),
             name: name,
@@ -219,20 +227,21 @@ try {
             quantity: quantity,
             ico: icon
         }
+        //инициализируем пустой аквариум по умолчанию
         setFishItems([...fishItems, data])
         setName(null)
         setTitle(null)
         setQuantity(null)
         setIcon("FishClown")
         setIsModalVisible(false);
-        try {
+        try {//получаем данные аквариума из локального хранилища
             await AsyncStorage.setItem('fishItems', JSON.stringify([...fishItems, data]));
         } catch (e) {
             console.log(e)
         }
     }
 
-    const completeFish = async (index) => {
+    const completeFish = async (index) => {//активируется при изменении количества рыбок в аквариуме
             let time = 0
             let capacity = 0
             try {
@@ -240,7 +249,7 @@ try {
             capacity = aqua[0].capacity
             } catch (e) { 
             console.log(e) }
-
+            //пересчёт времени генерации пуш уведомлений
             if(capacity < 70) time = 60 * 60 * 168
             else if(capacity >= 70 && capacity < 100) time = 60 * 60 * 336
             else time = 60 * 60 * 672
@@ -274,7 +283,7 @@ try {
         }
     }
 
-    const changeFish = async (index) => {
+    const changeFish = async (index) => {//функция изменения информации о рыбе
         Keyboard.dismiss()
         let data = {
             key: fishItems.length.toString(),
@@ -285,6 +294,8 @@ try {
             ico: icon
         }
         let items = [
+            //копируем в массив рыб информацию обо всех рыбах, кроме выбранной для изменения.
+            //информация изменяемой рыбы заменяется на новую
             ...fishItems.slice(0, index),
             fishItems[index] = data,
             ...fishItems.slice(index + 1)
@@ -297,7 +308,7 @@ try {
         setIsModalVisible(false);
         setIsModalFish(false)
         try {
-            await AsyncStorage.setItem('fishItems', JSON.stringify(items));
+            await AsyncStorage.setItem('fishItems', JSON.stringify(items));//помещаем информацию в локальное хранилище
         } catch (e) {
             console.log(e)
         }
@@ -323,7 +334,7 @@ try {
     const [isModalFish, setIsModalFish] = useState(false)
     const [modalIndex, setModalIndex] = useState(false)
 
-    const openModalFish =  (index) => {
+    const openModalFish =  (index) => {//окно информации о рыбе
       setIsModalVisible(true);
         setName(fishItems[index].name === null ? "" : fishItems[index].name)
         setTitle(fishItems[index].title === null ? "" : fishItems[index].title)
@@ -333,16 +344,16 @@ try {
         setModalIndex(index)
     }
 
-    const openDeleteAlert = (index) => {
+    const openDeleteAlert = (index) => {//окно удаления рыбы
         Alert.alert(
             "Вы действительно хотите удалить рыбку?", "",
             [
-                {text: 'да', onPress: () => completeFish(index)},
+                {text: 'да', onPress: () => completeFish(index)},//удаление рыбы вызывает функцию пересчёта времени генерации уведомлений
                 {text: 'нет'}
             ]
         )
     }
-    if( !isLoading ) {
+    if( !isLoading ) {//ожидание загрузки аквариума
         return(
             <View style={{flex:1,justifyContent:'center',alignItems:'center', backgroundColor: "white"}}>
               <ActivityIndicator size="large"/>
@@ -350,7 +361,7 @@ try {
             </View>
         );
     }
-    return (
+    return (//рендер компонентов
             <View style={[styles.container, {backgroundColor: colors.background}]}>
                 <StatusBar backgroundColor={colors.background}/>
                 {
@@ -371,6 +382,7 @@ try {
                                             <TouchableOpacity activeOpacity={0.8} onPress={() => openModalFish(index)} key={index}
                                             style={[styles.item, {backgroundColor: colors.background2}]}>
                                                 <View style={[styles.itemLeft, {width: '75%'}]}>
+                                                    {/*Иконка рыбы */}
                                                     <View style={[styles.square]}>
                                                         {
                                                             item.ico === "FishClown" ? <FishClown />
@@ -397,6 +409,7 @@ try {
                                                             : null
                                                     }
                                                     </View>
+                                                    {/*Взаимодействие с рыбой,удаление рыбы */}
                                                     <View>
                                                     {
                                                         item.name === '' || item.name === null ? null :
@@ -453,6 +466,7 @@ try {
                         }
 
                     </View>
+                    {/*Инициализация новой рыбы */}
                      <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'  showsVerticalScrollIndicator={false} style={{padding: 15}}>
                     <Text style={{fontSize: 20, marginLeft: 10, color: "#009387"}}>Имя рыбки</Text>
                     <View style={[styles.inputWrapper]}>
@@ -495,6 +509,7 @@ try {
                         </TouchableOpacity>
                     </View>
                 }
+                {/*Добавление новой рыбки из списка рыбок */}
                         <View style={{alignItems: 'center'}}>
                             <View style={{marginTop: 10, flexDirection: 'row'}}>
                                 <TouchableOpacity onPress={() => {setIcon("Teleskop"); Keyboard.dismiss()}} 
@@ -601,7 +616,7 @@ try {
     )
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({//константа, в которой содержится определение стилей контейнеров и их свойства
     container: {
         flex: 1,
         backgroundColor: '#E8EAED',

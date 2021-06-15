@@ -1,9 +1,19 @@
+/**
+*В данной папке находится код функций работы с анимацией рыбок и импортом svg компонентов
+*Функция анимации рыбок
+*/
+
+//Импорт элементов из библиотек
 import React from 'react';
 import { StyleSheet, Dimensions, Animated, Easing} from 'react-native'
 import {useFocusEffect} from '@react-navigation/native'
 
+
 export const AnimatedFish = ({height, raznica, children}) => {
+    //размер окна
     const screenWidth = Dimensions.get('screen').width;
+
+
     const [fun] = React.useState([
         {
             x: height/14.5,
@@ -142,28 +152,28 @@ export const AnimatedFish = ({height, raznica, children}) => {
             y: height/2.04
         },
     ]);
-    const rand = Math.ceil(getRandomFloat(0,33))
+    const rand = Math.ceil(getRandomFloat(0,33))//случайное целое число
 
-    let sdvigX = fun[rand].x + screenWidth / 2 - height /2;
-    let sdvigY = raznica + getRandomFloat( fun[rand].y, fun[rand].y);
+    let sdvigX = fun[rand].x + screenWidth / 2 - height /2;//сдвиг рыбки по координате Х
+    let sdvigY = raznica + getRandomFloat( fun[rand].y, fun[rand].y);//сдвиг рыбки по координате Y
     
     let left = new Animated.Value(sdvigX)
     let bottom = new Animated.Value(sdvigY)
-    
     let spinValue = new Animated.Value(0);
-    const spin = spinValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '180deg']
+
+    const spin = spinValue.interpolate({//интерполяционный метод
+        inputRange: [0, 1],//принимает на вход значение от 0 до 1
+        outputRange: ['0deg', '180deg']//на выходе возвращает значение от 0 до 180 градусов
       })
      
-    const startAnimate = () => {
+    const startAnimate = () => {//функция анимации одной рыбки
         let time = getRandomFloat(5000,8000)
-        let sdvigX2 =  getRandomFloat( height / 14.5,  height / 1.31) + screenWidth / 2 - height /2
-        if(sdvigX2 < screenWidth / 2 - 30) sdvigX2 += 30
-        else sdvigX2 -= 30
-        let flag = 1
+        let sdvigX2 =  getRandomFloat( height / 14.5,  height / 1.31) + screenWidth / 2 - height /2//случайное значение нового сдвига по координате Х
+        if(sdvigX2 < screenWidth / 2 - 30) sdvigX2 += 30 //если координата нового сдвига левее аквариума -возвращаем сдвиг в границы аквариума
+        else sdvigX2 -= 30  
+        let flag = 1//флаг отвечает за возникновение сдвига рыбки по Y
         let prev;
-        fun.map((item, index) => {
+        fun.map((item, index) => {//в зависимости от сдвига по Х устанавливаем сдвиг по Y и изменяем флаг flag
             if(item.x == sdvigX && flag == 1) {
                 sdvigY = item.y
                 flag = 0
@@ -174,15 +184,15 @@ export const AnimatedFish = ({height, raznica, children}) => {
             }
             prev = item
         })
-        sdvigY = getRandomFloat(sdvigY + 30, height / 2) + raznica
+        sdvigY = getRandomFloat(sdvigY + 30, height / 2) + raznica//случайный сдвиг по Y
         if(sdvigX2 > sdvigX)
         {
-            Animated.timing(
+            Animated.timing(//анимирует значение с течением времени с использованием функции easing
                 spinValue,
                 {
-                    toValue: 0,
-                    duration: 1000,
-                    easing: Easing.linear,  
+                    toValue: 0, //значение угла поворота для функции интерполяции
+                    duration: 1000,//длительность анимации
+                    easing: Easing.linear,  //тип изменения: линейное замедление
                     useNativeDriver: false  
                 }
             ).start()
@@ -192,23 +202,23 @@ export const AnimatedFish = ({height, raznica, children}) => {
             Animated.timing(
                 spinValue,
                 {
-                    toValue: 1,
-                    duration: 1000,
-                    easing: Easing.linear, 
+                    toValue: 1,//значение угла поворота для функции интерполяции
+                    duration: 1000,//длительность анимации
+                    easing: Easing.linear, //тип изменения: линейное замедление
                     useNativeDriver: false  
                 }
             ).start()
         }
         sdvigX = sdvigX2
         Animated.timing(left, {
-            toValue: sdvigX,
+            toValue: sdvigX,//значение угла поворота для функции интерполяции
             useNativeDriver: false,
-            duration: time,
+            duration: time,//длительность в течении случайного времени
         }).start();
         Animated.timing(bottom, {
-            toValue: sdvigY,
+            toValue: sdvigY,//значение угла поворота для функции интерполяции
             useNativeDriver: false,
-            duration: time,
+            duration: time,//длительность в течении случайного времени
         }).start();
     }
 
@@ -220,7 +230,7 @@ export const AnimatedFish = ({height, raznica, children}) => {
         return pos[0];
     };
 
-    function getRandomFloat(m1, m2) {
+    function getRandomFloat(m1, m2) {//функция генерации случайного вещественного числа
         let min
         let max
         if(m1 < m2) {min = m1; max = m2} else {min = m2; max = m1} 
@@ -234,7 +244,7 @@ export const AnimatedFish = ({height, raznica, children}) => {
         setInterval(() =>{startAnimate()}, getRandomFloat(8000,15000))
     }, []))
 
-    return (
+    return (//рендер элемента
         <Animated.View style={{position: 'absolute', transform: [{rotateY: spin}], left: left, bottom: bottom}}>
             {children}
         </Animated.View>

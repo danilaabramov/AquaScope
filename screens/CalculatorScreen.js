@@ -1,13 +1,24 @@
+/**
+*В данной папке находится код окон приложения
+*Окно калькуляторов
+*/
+
+//Импорт элементов из библиотек
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import {Caption, Paragraph} from "react-native-paper";
 import AnimatedHeader from 'react-native-animated-header';
+
+
 export const CalculatorScreen = ({navigation}) => {
+    
+    //цветовая схема окна
     const {colors} = useTheme();
     const theme = useTheme();
-    return (
+
+    return (//рендер компонентов
         <AnimatedHeader 
         style={{flex: 1, marginTop: 20, paddingHorizontal: 10}}
         title='Калькуляторы'
@@ -35,7 +46,7 @@ export const CalculatorScreen = ({navigation}) => {
                                            
                                           <Paragraph  style={[{color: colors.background2, fontWeight: 'bold', fontSize: 20, padding: 15}]}>Основные</Paragraph>
 </View>
-
+{/*с помощью функционального компонента TouchableOpacity осуществляются переходы на соответствующие страницы калькуляторов */}
                            <TouchableOpacity onPress={() => {navigation.navigate("AquariumVolume")} } style={{width: '100%'}}
                                                      activeOpacity={0.5}     >
                                        
@@ -158,7 +169,7 @@ export const CalculatorScreen = ({navigation}) => {
     );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({//константа, в которой содержится определение стилей контейнеров и их свойства
     container: {
         flex: 1,
     },

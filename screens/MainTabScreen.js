@@ -1,3 +1,9 @@
+/**
+*В данной папке находится код окон приложения
+*Основное нижнее меню приложения
+*/
+
+//Импорт элементов из библиотек
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import { createStackNavigator } from "@react-navigation/stack";
@@ -9,15 +15,23 @@ import {NotificationsScreen} from "./NotificationsScreen";
 import {CalculatorScreen} from "./CalculatorScreen";
 import { useTheme } from '@react-navigation/native';
 import {ManualScreen} from "./ManualScreen";
+
+//создание элементов навигации при перемещении между окнами приложения
 const HomeStack = createStackNavigator()
 const DetailsStack = createStackNavigator()
 const Tab = createMaterialBottomTabNavigator()
 
 export const MainTabScreen = () => {
+
+    //цветовая схема устройства
     const theme = useTheme();
     const { colors } = useTheme();
-    return  (
+    
+    return  (//рендер элемента
         <Tab.Navigator labeled={false} initialRouteName="Home" activeColor="#fff" barStyle={{backgroundColor: 'tomato'}} inactiveColor={theme.dark ? "rgba(255, 255, 255, .5)" : "rgba(0, 0, 0, .5)"}>
+            {/*Далее следует описание всех пунктов нижнего меню приложения, которое включает в себя указание названия пункта меню 
+            *иконку пункта меню и некоторые стилевые качества пунктов меню
+            */ }
             <Tab.Screen name="Home"  component={HomeScreen} options={{
                 tabBarLabel: 'Аквариум',
                 tabBarColor: theme.dark ? '#00544D' : '#009387',
@@ -66,7 +80,9 @@ export const MainTabScreen = () => {
     )
 }
 
+//аналогично первому элементу инициализированы следующие 2 элемента
 const HomeStackScreen = ({navigation}) => {
+
     const theme = useTheme();
 
 
@@ -118,7 +134,7 @@ const NotificationsStackScreen = ({navigation}) => {
 
 
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({//константа, в которой содержится определение стилей контейнеров и их свойства
     shadow: {
         shadowColor: '#7f5df0',
         shadowOffset: {

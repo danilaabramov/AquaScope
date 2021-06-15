@@ -1,3 +1,9 @@
+/**
+*В данной папке находится код окон приложения
+*Основное окно приложения
+*/
+
+//Импорт элементов из библиотек
 import React, {useState, useCallback, useRef} from 'react';
 import {Animated, View, Text, StyleSheet,TouchableOpacity, Image, ScrollView , Switch, Dimensions} from 'react-native';
 import { useTheme } from '@react-navigation/native';
@@ -35,14 +41,19 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 export const HomeScreen = ({navigation, useIsFocused}) => {
 
+    //размеры окна
     const screenWidth = Dimensions.get('screen').width;
     const screenHeight = Dimensions.get('screen').height;
+
+    //цветовая схема окна
     const { colors } = useTheme();
     const theme = useTheme();
-    const [fishItems, setFishItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(false)
-    const [isAquarium, setIsAquarium] = useState(true)
-    const [aquarium, setAquarium] = useState([{
+
+
+    const [fishItems, setFishItems] = useState([]);//массив рыбок
+    const [isLoading, setIsLoading] = useState(false)//логическая переменная определяет, что страница загружена
+    const [isAquarium, setIsAquarium] = useState(true)//логическая переменная определяет то, что аквариум успешно загружен
+    const [aquarium, setAquarium] = useState([{//пустой аквариум по умолчанию
                 isAquarium: false,
                 name: '',
                 type: '',
@@ -57,7 +68,7 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
 
     const value = useRef(new Animated.Value(animate_state.start)).current
 
-    const startAnimate = () => {
+    const startAnimate = () => {//анимация окна
         if (animate_state.end) {
             Animated.timing(value, {toValue: animate_state.end, useNativeDriver: false, duration: 500}).start()
             animate_state.start = 100
@@ -86,7 +97,7 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
         animate_state.end = 0
         startAnimate()
         setTimeout(async() => {
-            try {
+            try {//получаем информацию об аквариуме из локального хранилища
                 setAquarium([...JSON.parse(await AsyncStorage.getItem('Aquarium'))]);
                   setIsAquarium(true)
         } catch (e) { 
@@ -94,6 +105,7 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
             console.log(e) }
 
             try {  
+                //получаем информацию о массиве рыбок из локального хранилища
                 setFishItems([...JSON.parse(await AsyncStorage.getItem('fishItems'))]);
             } catch (e) { console.log(e) }
         }, 0)
@@ -104,6 +116,7 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
         <View  style={styles.container}>
             <StatusBar style={ theme.dark ? "light" : "dark"}/>
             <Image blurRadius={.7} style={{position: 'absolute', width: '100%', height: '100%', flex: 0}}
+            //в зависимости от выбранной цветовой схемы устанавливаем стандартный или тёмный фон 
             source={theme.dark ? require('../components/fonHome20.jpg') : require('../components/fonHome.jpg')}/>
 
             <View style={{width: '100%', height: 100, backgroundColor: theme.dark ? '#00544D' : '#009387'}}>
@@ -118,6 +131,7 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
 
 {isLoading ? <View style={{height: screenHeight - 154, width: '100%'}}>
 { !isAquarium ?
+//если аквариум не создан, предлагаем пользователю создать
       <TouchableOpacity activeOpacity={0.8} onPress={() => {navigation.navigate("CreateAquarium")}}>
 <View style={{justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%'}} >
             <View style={{height: '20%', width: screenWidth - 20, backgroundColor: theme.dark ? '#00544D' : '#009387', borderRadius: 20, margin: 10, justifyContent: 'center', alignItems: 'center'}}>
@@ -133,7 +147,7 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
          <View>
                 { 
                      isAquarium ?   fishItems.map((item, index) => {
-                        return (
+                        return (//если аквариум уже существует-инициализируем всех рыбок из списка и активыруем анимацию каждой рыбки
                             (item.ico === "FishClown") ?
                             <AnimatedFish key={index} height={razmer} raznica={raznica}><FishClown /></AnimatedFish>
                             :  (item.ico === "FishBlue") ?
@@ -150,7 +164,7 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
                             <AnimatedFish key={index}  height={razmer} raznica={raznica}><SwordBill/></AnimatedFish>
                             :  (item.ico === "Petuh") ?
                             <AnimatedFish key={index}  height={razmer} raznica={raznica}><Petuh/></AnimatedFish>
-                            :  (item.ico === "Scalarias") ?
+                            :  (item.ico === "Scalaria") ?
                             <AnimatedFish key={index}  height={razmer} raznica={raznica}><Scalaria/></AnimatedFish>
                             :  (item.ico === "BigTail") ?
                             <AnimatedFish key={index}  height={razmer} raznica={raznica}><BigTail/></AnimatedFish>
@@ -180,6 +194,7 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
                     )} ) : null
                 }
             </View>
+            {/*Элементы меню главного окна приложения */}
              { isAquarium ?   <View style={{alignItems: "center"}}>
                 <TouchableOpacity activeOpacity={0.5} onPress={() => {navigation.navigate("FishScreen"); setFishItems([])}}
                                   style={{ position: "absolute",  bottom: screenHeight/30 + 45, left: '85%'}}>
@@ -197,6 +212,8 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
                 </TouchableOpacity>
             </View> : null }
             <Animated.View  style={ {color: colors.text, height: height}}/>
+            
+            {/*Окно информации об аквариуме */}
                { isAquarium ?   <Animatable.View animation="fadeInUpBig" style={[styles.footer, {
                     backgroundColor: colors.backgroundOpacity   }]} >
                     <Text style={ {color: "white", borderBottomColor: colors.text,
@@ -226,7 +243,7 @@ export const HomeScreen = ({navigation, useIsFocused}) => {
     )
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({//константа, в которой содержится определение стилей контейнеров и их свойства
     container: {
         flex: 1,
     },

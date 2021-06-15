@@ -1,3 +1,9 @@
+/**
+*В данной папке находится код окон приложения
+*Окно создания нового аквариума
+*/
+
+//Импорт элементов из библиотек
 import React, {useState, useCallback} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions, TextInput, Keyboard } from 'react-native';
 import { useTheme } from "@react-navigation/native";
@@ -9,19 +15,26 @@ import {useIsFocused, useFocusEffect} from '@react-navigation/native'
 import PushNotification from "react-native-push-notification";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-export const CreateAquarium = ({navigation}) => {
-    const {colors} = useTheme();
-    const theme = useTheme();
-      const screenWidth = Dimensions.get('screen').width;
 
-const [name, setName] = useState(null)
-const [type, setType] = useState(null)
-const [capacity, setCapacity] = useState(null)
-const [date, setDate] = useState('')
+
+export const CreateAquarium = ({navigation}) => {
+
+  //цветовая схема окна
+  const {colors} = useTheme();
+  const theme = useTheme();
+
+  //размер окна
+  const screenWidth = Dimensions.get('screen').width;
+
+
+const [name, setName] = useState(null)//название аквариума
+const [type, setType] = useState(null)//тип аквариума
+const [capacity, setCapacity] = useState(null)//ёмкость аквариума
+const [date, setDate] = useState('')//дата создания аквариума
   const [notificationsDate, setNotificationsDate] = useState([])
      const [listNotification, setListNotification] = useState([])
 
-const [aquarium, setAquarium] = useState([{
+const [aquarium, setAquarium] = useState([{//по умолчанию создаётся пустой аквариум без данных
                 isAquarium: false,
                 name: '',
                 type: '',
@@ -29,7 +42,7 @@ const [aquarium, setAquarium] = useState([{
                 date: ''
             }])
 
-            PushNotification.configure({
+            PushNotification.configure({//настройка пуш-уведомлений, регистрация event-ов
     onRegister: function (token) {
       console.log("TOKEN:", token);
     },
@@ -53,40 +66,40 @@ const [aquarium, setAquarium] = useState([{
     requestPermissions: true,
 });
 
-    const showNotificationShedule = (title, message, index, id, chanel, time, time2) => {
-    PushNotification.createChannel(
+    const showNotificationShedule = (title, message, index, id, chanel, time, time2) => {//функция отображения пуш-уведомления
+    PushNotification.createChannel(//создание канала для передачи пуш-уведомления
       {
-        channelId: chanel,
-        channelName: chanel,
+        channelId: chanel,//id канала
+        channelName: chanel,//имя канала
         channelDescription: "A chanel to categorise your notifications",
-        playSound: false,
+        playSound: false,//звуковое оповещение при поступлении уведомления
         soundName: "default",
         importance: 4,
-        vibrate: true,
+        vibrate: true,//вибрация
          
       }
     )
 
-    PushNotification.localNotificationSchedule(
+    PushNotification.localNotificationSchedule(//генерация уведомления
        {
            id: id,
            channelId: chanel,
-           title: title,
-          message: message,
+           title: title,//заглавие уведомления
+          message: message,//текст уведомления
           vibrate: true,
           vibration: 300,
           soundName: "default",
-          date: new Date(Date.now() + time2 * 1000) ,
+          date: new Date(Date.now() + time2 * 1000) ,//время уведомления
           allowWhileIdle: true,
           repeatType: "time",
-          repeatTime: time * 1000,
-          groupSummary: true,
-          ignoreInForeground: true,
+          repeatTime: time * 1000,//время повторения уведомления
+          groupSummary: true
         }
     )
 }
 
-const handleAddAquarium = async () => {
+const handleAddAquarium = async () => {//алгоритмы запуска аквариума и расчёта времени генерации уведомлений
+  //время между генерацией уведомления зависит от ёмкости аквариума и от количества рыбок в аквариуме
     let time = 0
     if(capacity < 70) time = 60 * 60 * 168
     else if(capacity >= 70 && capacity < 100) time = 60 * 60 * 336
@@ -106,10 +119,10 @@ const handleAddAquarium = async () => {
     seconds += (Math.abs(Math.floor(seconds / time))) * time
     if(listNotification[1].active){
         PushNotification.cancelLocalNotifications({id: listNotification[1].key});
-        let chanel = "com.aquascope" + listNotification[1].key
-        showNotificationShedule("Оповещение", listNotification[1].title, 1, listNotification[1].key, chanel, time, seconds)
+        let chanel = "com.aquascope" + listNotification[1].key //инициализируем канал для передачи пуш-уведомления
+        showNotificationShedule("Оповещение", listNotification[1].title, 1, listNotification[1].key, chanel, time, seconds)//генерация уведомления
     }  
-        try {
+        try {//помещаем в локальное хранилище информацию об аквариуме
             await AsyncStorage.setItem('Aquarium', JSON.stringify([{
             isAquarium: true,
             name: name,
@@ -131,7 +144,7 @@ try {
         setListNotification([...data]);
 
          } catch (e) { console.log(e) 
-         setListNotification( [
+         setListNotification( [//список уведомлений
       
             {
                 key: 1,
@@ -154,7 +167,7 @@ try {
 
 
 try {
-        setNotificationsDate([...JSON.parse(await AsyncStorage.getItem('notificationsDate'))])
+        setNotificationsDate([...JSON.parse(await AsyncStorage.getItem('notificationsDate'))])//получаем дату формирования уведомления из локальной памяти
       
     } catch (e) {
       console.log(e)
@@ -185,7 +198,7 @@ try {
     }
             try {
               //  setAquarium([...JSON.parse(await AsyncStorage.getItem('Aquarium'))]);
-              let date = [...JSON.parse(await AsyncStorage.getItem('Aquarium'))]
+              let date = [...JSON.parse(await AsyncStorage.getItem('Aquarium'))]//инициализация аквариума из локальной памяти
                 setName(date[0].name)
                  setType(date[0].type)
                 setCapacity(date[0].capacity)
@@ -208,7 +221,7 @@ const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
    
   };
 
-    return (
+    return (//рендер элемента
         <View style={[styles.container, {marginTop: 50, paddingHorizontal: 10}]}>
 <DateTimePickerModal
         isVisible={isDatePickerVisible}
@@ -265,7 +278,7 @@ const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({//константа, в которой содержится определение стилей контейнеров и их свойства
     container: {
         flex: 1,
     },

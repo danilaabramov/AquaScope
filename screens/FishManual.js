@@ -1,3 +1,9 @@
+/**
+*В данной папке находится код окон приложения
+*Окно мануала 
+*/
+
+//Импорт элементов из библиотек
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {Easing, View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions, Image, Animated} from 'react-native';
 import { useTheme } from "@react-navigation/native";
@@ -13,20 +19,25 @@ import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {useIsFocused, useFocusEffect} from '@react-navigation/native'
 
+//размер окна
 const screenWidth = Dimensions.get('screen').width;
-    const screenHeight = Dimensions.get('screen').height;
+const screenHeight = Dimensions.get('screen').height;
+
+
 export const FishManual = ({ navigation, route }) => {
+
+    //цветовая схема окна
     const {colors} = useTheme();
     const theme = useTheme();
 
-const [isLoading, setIsLoading] = useState(false)
+const [isLoading, setIsLoading] = useState(false)//переменная, определяющая, загружен ли мануал
 
     const [listData, setListData] = useState(
         Manual.sort(function (a, b) {
             if (a.title > b.title) return 1
             if (a.title < b.title) return -1
             return 0;
-            }).map((ManualItem, index) => ({
+            }).map((ManualItem, index) => ({//загрузка отсортированных по порядку данных из мануала
                 key: `${index}`,
                 title: ManualItem.title,
                 details: ManualItem.details,
@@ -44,7 +55,7 @@ const [isLoading, setIsLoading] = useState(false)
         
     }, [useIsFocused]))
 
-    return (
+    return (//рендер элемента
              <Animatable.View //animation="lightSpeedIn"
              style={[styles.modelContentWrapper, {backgroundColor: colors.background}]}>
            
@@ -76,7 +87,7 @@ const [isLoading, setIsLoading] = useState(false)
     );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({//константа, в которой содержится определение стилей контейнеров и их свойства
     container: {
         flex: 1,
        /* alignItems: 'center',

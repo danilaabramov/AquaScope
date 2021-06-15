@@ -1,3 +1,9 @@
+/*
+*Основной элемент программы
+*Данный файл является точкой входа для работы приложения
+*/
+
+//Импорт необходимых для работы классов из библиотек
 import React, { useEffect } from 'react';
 import { Button, StyleSheet, Text, View, ActivityIndicator, useColorScheme, Appearance } from 'react-native'
 import {
@@ -12,16 +18,17 @@ import {
     DarkTheme as PaperDarkTheme
 } from 'react-native-paper';
 
+//Импорт окон приложения
 import { DrawerContent } from './screens/DrawerContent';
 import{ MainTabScreen }from './screens/MainTabScreen';
 import {NoteScreen} from './screens/NoteScreen';
 import {FishScreen} from './screens/FishScreen';
 import {HomeScreen} from './screens/HomeScreen';
 import { AuthContext } from './components/context';
-
 import { CreateAquarium }from './screens/CreateAquarium';
 import { FishManual }from './screens/FishManual';
 
+//импорт калькуляторов
 import { CaCO3 }from './calculators/CaCO3';
 import { ConvertLength }from './calculators/ConvertLength';
 import { ConvertTemperature }from './calculators/ConvertTemperature';
@@ -29,7 +36,6 @@ import { ConvertWeight }from './calculators/ConvertWeight';
 import { K2CO3 }from './calculators/K2CO3';
 import { K2SO4 }from './calculators/K2SO4';
 import { KHCO3 }from './calculators/KHCO3';
-
 import { AquariumVolume }from './calculators/AquariumVolume';
 import { CO2Level }from './calculators/CO2Level';
 import { AquariumWater }from './calculators/AquariumWater';
@@ -38,17 +44,25 @@ import {ConvertWaterVolume }from './calculators/ConvertWaterVolume';
 import {MixerRO}from './calculators/MixerRO';
 import {KNO3}from './calculators/KNO3';
 
+//импорт классов для асинхронной работы приложения, пуш-уведомлений и т.д.
 import AsyncStorage from '@react-native-community/async-storage';
 import Users from "./model/users";
 import { useTheme } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native'
 import PushNotification from "react-native-push-notification";
+
+
 const Drawer = createDrawerNavigator();
 
 const App = () => {
+
+    //переменная хранящая состояние цветовой схемы устройства
   const { colors } = useTheme();
+
+  //получаем информацию о цветовой схеме устройства (обычная, тёмная)
     const [isDarkTheme, setIsDarkTheme] = React.useState(Appearance.getColorScheme() === "dark")
 
+    //стиль темы по умолчанию
     const CustomDefaultTheme = {
         ...NavigationDefaultTheme,
         ...PaperDefaultTheme,
@@ -62,6 +76,7 @@ const App = () => {
         }
     }
 
+    //стиль тёмной темы
     const CustomDarkTheme = {
         ...NavigationDarkTheme,
         ...PaperDarkTheme,
@@ -88,7 +103,7 @@ const App = () => {
         setInterval(() =>{authContext.toggleTheme()}, 1)
     }, [])
 
-    return (
+    return (//Отрисовка всех компонентов программы, с использованием заданной пользователем темы
         <PaperProvider theme={theme}>
                 <NavigationContainer theme={theme}>
                             <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
@@ -121,6 +136,6 @@ const App = () => {
     )
 }
 
-export default App
+export default App//экспортируем данную функцию
 
 const styles = StyleSheet.create({ })

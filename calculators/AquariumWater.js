@@ -1,3 +1,9 @@
+/**
+*В данной папке находится код функций калькуляторов.
+*Калькулятор объёма подменяемой воды
+*/
+
+//Импорт элементов из библиотек
 import React, {useState} from 'react';
 import { View, Text, StyleSheet,  TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import { useTheme } from "@react-navigation/native";
@@ -5,16 +11,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 
 export const AquariumWater = ({navigation}) => {
+
+    //цветовая схема окна
     const {colors} = useTheme();
 
+    const [VolumeA, setVolumeA] = useState(null)//начальный объём аквариума
+    const [VolumeB, setVolumeB] = useState(null)//фактический объём аквариума
+    const [percent, setPercent] = useState(null)//процент подменяемой воды
 
-
-    const [VolumeA, setVolumeA] = useState(null)
-    const [VolumeB, setVolumeB] = useState(null)
-    const [percent, setPercent] = useState(null)
-   
-
-    return (
+    return (//рендер компонентов
         <View style={styles.container}>
 
 
@@ -23,8 +28,6 @@ export const AquariumWater = ({navigation}) => {
                   <MaterialCommunityIcons name="arrow-left" size={35} color={colors.text}/>
                    </TouchableOpacity>
                     <Text style={[styles.sectionTitle, {color: colors.text}]}>Подмена воды</Text></View>
-
-
 
          <ScrollView  showsVerticalScrollIndicator={false}>
              
@@ -36,6 +39,8 @@ export const AquariumWater = ({navigation}) => {
 <View style={styles.inputWrapper}>
   <TextInput keyboardType='numeric'
    style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+
+   //инициализация переменной VolumeA значением, введённым пользователем
     placeholder="" onChangeText={text => setVolumeA(text)} value={VolumeA}
       placeholderTextColor={'#666'} />
        </View>
@@ -45,6 +50,8 @@ export const AquariumWater = ({navigation}) => {
        <View style={styles.inputWrapper}>
   <TextInput keyboardType='numeric'
    style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+
+   //инициализация переменной VolumeB значением, введённым пользователем
     placeholder="" onChangeText={text => setVolumeB(text)} value={VolumeB}
       placeholderTextColor={'#666'}/>
        </View>
@@ -54,17 +61,15 @@ export const AquariumWater = ({navigation}) => {
 <View style={styles.inputWrapper}>
   <TextInput keyboardType='numeric'
    style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text}]}
+
+   //инициализация переменной percent значением, введённым пользователем
     placeholder="" onChangeText={text => setPercent(text)} value={percent}
       placeholderTextColor={'#666'}/>
        </View>
 
-
-
 </View>
 
-
-
-
+{/*Расчёт подменяемой воды брутто и нетто:*/}
 <View style={[styles.textInput, {backgroundColor: colors.background2, color: colors.text, marginTop: 15, padding: 15}]}>
                     <Text style={{color: '#72D695', fontWeight: 'bold', marginBottom: 10}}>Результат:</Text>
     <Text style={{color: colors.text}}>Подмена воды брутто : {VolumeA * percent / 100} литров</Text>
@@ -72,28 +77,18 @@ export const AquariumWater = ({navigation}) => {
        
 </View>
 
-
 </ScrollView>
         </View>
-
-
-
-
-
-
     );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({//константа в которой содержится определение стилей контейнеров и их свойства
     container: {
         flex: 1,
         marginTop: 50,
         marginHorizontal: 20,
-    
-        
     },
     inputWrapper: {
-        //marginTop: 20,
     },
     textInput: {
         marginTop: 5,

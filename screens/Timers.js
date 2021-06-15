@@ -1,10 +1,16 @@
+/**
+*В данной папке находится код окон приложения
+*элемент таймера для отображения на странице пуш-уведомлений
+*/
+
+//Импорт элементов из библиотек
 import React, { Component, useEffect } from 'react';
 import {Text,View} from 'react-native'
 import AsyncStorage from "@react-native-community/async-storage";
 
 
 
-  class ClockOfFood extends Component {//таймер кормления рыбок
+  class ClockOfFood extends Component {//таймер
     constructor(props){
       super(props);
       this.state={
@@ -23,7 +29,7 @@ import AsyncStorage from "@react-native-community/async-storage";
   clearInterval(this.timerID);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate() {//вызывается в случае запуска компонента
     if(this.state.state != this.props.data[this.props.index].active){
       this.tick()
       this.setState({
@@ -34,7 +40,7 @@ import AsyncStorage from "@react-native-community/async-storage";
   
   tick = () => {//фукнция одного такта
 
-  if(this.props.data[this.props.index].active){
+  if(this.props.data[this.props.index].active){//устанавливаем текущее время
     let d = this.props.notif;
     let a = new Date(Date.now())
     let utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours(), a.getMinutes(), a.getSeconds());
@@ -53,10 +59,10 @@ import AsyncStorage from "@react-native-community/async-storage";
   }
   render(){ //рендер элемента
     const sec = this.state.sec
-    const days = Math.floor(sec / 3600 / 24)
-    const hour = Math.floor(sec % (3600 * 24) / 3600)
-    const min = Math.floor((sec % 3600) /60)
-    const secs =this.state.sec % 60;
+    const days = Math.floor(sec / 3600 / 24)//количество дней
+    const hour = Math.floor(sec % (3600 * 24) / 3600)//количество часов
+    const min = Math.floor((sec % 3600) /60)//количество минут
+    const secs =this.state.sec % 60;//количество секунд
     return(
       <Text style = {{color: this.props.color, fontSize: 25, textAlign: 'center', fontWeight: 'bold'}}>{days} д : {hour} ч : {min} м: {secs} с</Text>
     )
