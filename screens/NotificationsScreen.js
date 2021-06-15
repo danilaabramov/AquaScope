@@ -67,7 +67,7 @@ const showNotificationShedule = (title, message, index, id, chanel, time) => {//
          vibrate: true,
          vibration: 300,
          soundName: "default",
-         date: new Date(Date.now() + 5000/* time * 1000*/) ,//время уведомления
+         date: new Date(Date.now() + time * 1000) ,//время уведомления
          allowWhileIdle: true,
          repeatType: "time",
          repeatTime: time * 1000,//время повторения уведомления
